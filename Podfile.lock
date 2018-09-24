@@ -1,22 +1,38 @@
 PODS:
   - Alamofire (4.7.3)
+  - LoginServiceKit (2.0.1)
   - PromiseKit/Alamofire (6.4.0):
     - Alamofire (~> 4.0)
     - PromiseKit/CorePromise
   - PromiseKit/CorePromise (6.4.0)
+  - SwiftDate (5.0.7)
 
 DEPENDENCIES:
+  - LoginServiceKit (from `https://github.com/Clipy/LoginServiceKit.git`)
   - PromiseKit/Alamofire
+  - SwiftDate
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - Alamofire
     - PromiseKit
+    - SwiftDate
+
+EXTERNAL SOURCES:
+  LoginServiceKit:
+    :git: https://github.com/Clipy/LoginServiceKit.git
+
+CHECKOUT OPTIONS:
+  LoginServiceKit:
+    :commit: 0cd196e3f88008253d715a28d6a34c884a943df1
+    :git: https://github.com/Clipy/LoginServiceKit.git
 
 SPEC CHECKSUMS:
   Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  LoginServiceKit: 848c11aeb8bffcc9011fdb766e32010e8d1e578d
   PromiseKit: ae3616f45d7bb9bf4ff1e91abc9b7a8c48a340e0
+  SwiftDate: f053fb89250c59af5eff777f3b832d2b9dd57403
 
-PODFILE CHECKSUM: df3c9fe658e791650b6d4b1d5faf44f788d6f804
+PODFILE CHECKSUM: f7586214ba6255cc91bfebc64cc0028e14f5a0ef
 
 COCOAPODS: 1.6.0.beta.1

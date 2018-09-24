@@ -7,27 +7,83 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0067990E21564BB1005E1E8C /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067990D21564BB1005E1E8C /* Services.swift */; };
+		0067991221564E86005E1E8C /* MockServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067991121564E86005E1E8C /* MockServices.swift */; };
+		0067991421565247005E1E8C /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067991321565247005E1E8C /* Project.swift */; };
+		0067992321565F8E005E1E8C /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067991321565247005E1E8C /* Project.swift */; };
+		006799242156614E005E1E8C /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21C9E2155211C00449FCC /* Functions.swift */; };
+		0067992921569FEC005E1E8C /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992821569FEC005E1E8C /* Either.swift */; };
+		0067992A2156A77B005E1E8C /* Either.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992821569FEC005E1E8C /* Either.swift */; };
+		0067992B2156AFBA005E1E8C /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21C9B215520F200449FCC /* Curry.swift */; };
+		0067992C2156AFC0005E1E8C /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21CA02155236700449FCC /* Operators.swift */; };
+		0067992E2156B4E6005E1E8C /* Enviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992D2156B4E6005E1E8C /* Enviroment.swift */; };
+		006799302156B848005E1E8C /* AutoTimesheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */; };
+		008EC0152157826100A10E7C /* ProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008EC0142157826100A10E7C /* ProjectVC.swift */; };
+		00903C132156B96E008F8BCE /* Enviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992D2156B4E6005E1E8C /* Enviroment.swift */; };
+		00903C142156B975008F8BCE /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067990D21564BB1005E1E8C /* Services.swift */; };
+		00903C152156B979008F8BCE /* MockServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067991121564E86005E1E8C /* MockServices.swift */; };
+		009E4D7521580587009E56B9 /* LogTimesheetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */; };
+		009E4D76215806D4009E56B9 /* LogTimesheetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */; };
+		00C21C9C215520F200449FCC /* Curry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21C9B215520F200449FCC /* Curry.swift */; };
+		00C21C9F2155211C00449FCC /* Functions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21C9E2155211C00449FCC /* Functions.swift */; };
+		00C21CA12155236700449FCC /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21CA02155236700449FCC /* Operators.swift */; };
+		00C23C02215746D0003BAD11 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C23C01215746D0003BAD11 /* Notification.swift */; };
 		00C5B5322154D412000D1B3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C5B5312154D412000D1B3F /* AppDelegate.swift */; };
-		00C5B5342154D412000D1B3F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C5B5332154D412000D1B3F /* ViewController.swift */; };
 		00C5B5362154D413000D1B3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00C5B5352154D413000D1B3F /* Assets.xcassets */; };
 		00C5B5392154D413000D1B3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C5B5372154D413000D1B3F /* Main.storyboard */; };
 		7103C4F26B8F78BA45FAC417 /* Pods_AutoTimesheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C04118384E5B7A09215E897D /* Pods_AutoTimesheet.framework */; };
+		D8867001084ACF9D9419F9F3 /* Pods_AutoTimesheetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0377A24A2B9087E5C26E1B21 /* Pods_AutoTimesheetTests.framework */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		0067991E21565F51005E1E8C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 00C5B5262154D412000D1B3F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 00C5B52D2154D412000D1B3F;
+			remoteInfo = AutoTimesheet;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		004DF50021573EB000640B8E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
+		0067990D21564BB1005E1E8C /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
+		0067991121564E86005E1E8C /* MockServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServices.swift; sourceTree = "<group>"; };
+		0067991321565247005E1E8C /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		0067991921565F51005E1E8C /* AutoTimesheetTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AutoTimesheetTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0067991D21565F51005E1E8C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0067992821569FEC005E1E8C /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
+		0067992D2156B4E6005E1E8C /* Enviroment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enviroment.swift; sourceTree = "<group>"; };
+		0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTimesheetTests.swift; sourceTree = "<group>"; };
+		008EC0142157826100A10E7C /* ProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectVC.swift; sourceTree = "<group>"; };
+		009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogTimesheetResponse.swift; sourceTree = "<group>"; };
+		00C21C9B215520F200449FCC /* Curry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curry.swift; sourceTree = "<group>"; };
+		00C21C9E2155211C00449FCC /* Functions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Functions.swift; sourceTree = "<group>"; };
+		00C21CA02155236700449FCC /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
+		00C23C01215746D0003BAD11 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		00C5B52E2154D412000D1B3F /* AutoTimesheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AutoTimesheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00C5B5312154D412000D1B3F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		00C5B5332154D412000D1B3F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		00C5B5352154D413000D1B3F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		00C5B5382154D413000D1B3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00C5B53A2154D413000D1B3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00C5B53B2154D413000D1B3F /* AutoTimesheet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoTimesheet.entitlements; sourceTree = "<group>"; };
+		0377A24A2B9087E5C26E1B21 /* Pods_AutoTimesheetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutoTimesheetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38ACA384668EF2AAA3343375 /* Pods-AutoTimesheet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoTimesheet.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoTimesheet/Pods-AutoTimesheet.release.xcconfig"; sourceTree = "<group>"; };
+		AA9567120951C78EDA8758D3 /* Pods-AutoTimesheetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoTimesheetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoTimesheetTests/Pods-AutoTimesheetTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BCD70B5D2632AB8F17205E84 /* Pods-AutoTimesheet.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoTimesheet.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoTimesheet/Pods-AutoTimesheet.debug.xcconfig"; sourceTree = "<group>"; };
 		C04118384E5B7A09215E897D /* Pods_AutoTimesheet.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutoTimesheet.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E87405FB566FF288764A4DB1 /* Pods-AutoTimesheetTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoTimesheetTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoTimesheetTests/Pods-AutoTimesheetTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		0067991621565F51005E1E8C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8867001084ACF9D9419F9F3 /* Pods_AutoTimesheetTests.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00C5B52B2154D412000D1B3F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -39,10 +95,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0067991A21565F51005E1E8C /* AutoTimesheetTests */ = {
+			isa = PBXGroup;
+			children = (
+				0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */,
+				0067991D21565F51005E1E8C /* Info.plist */,
+			);
+			path = AutoTimesheetTests;
+			sourceTree = "<group>";
+		};
+		00C21C9D2155210900449FCC /* Prelude */ = {
+			isa = PBXGroup;
+			children = (
+				00C21C9B215520F200449FCC /* Curry.swift */,
+				00C21C9E2155211C00449FCC /* Functions.swift */,
+				00C21CA02155236700449FCC /* Operators.swift */,
+				0067992821569FEC005E1E8C /* Either.swift */,
+			);
+			path = Prelude;
+			sourceTree = "<group>";
+		};
 		00C5B5252154D412000D1B3F = {
 			isa = PBXGroup;
 			children = (
 				00C5B5302154D412000D1B3F /* AutoTimesheet */,
+				0067991A21565F51005E1E8C /* AutoTimesheetTests */,
 				00C5B52F2154D412000D1B3F /* Products */,
 				549A25B9E01F656924BCEF14 /* Pods */,
 				37D842FF50B59A81E10245BD /* Frameworks */,
@@ -53,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				00C5B52E2154D412000D1B3F /* AutoTimesheet.app */,
+				0067991921565F51005E1E8C /* AutoTimesheetTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -60,8 +138,15 @@
 		00C5B5302154D412000D1B3F /* AutoTimesheet */ = {
 			isa = PBXGroup;
 			children = (
+				00C21C9D2155210900449FCC /* Prelude */,
+				0067992D2156B4E6005E1E8C /* Enviroment.swift */,
+				00C23C01215746D0003BAD11 /* Notification.swift */,
 				00C5B5312154D412000D1B3F /* AppDelegate.swift */,
-				00C5B5332154D412000D1B3F /* ViewController.swift */,
+				0067990D21564BB1005E1E8C /* Services.swift */,
+				0067991121564E86005E1E8C /* MockServices.swift */,
+				009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */,
+				0067991321565247005E1E8C /* Project.swift */,
+				008EC0142157826100A10E7C /* ProjectVC.swift */,
 				00C5B5352154D413000D1B3F /* Assets.xcassets */,
 				00C5B5372154D413000D1B3F /* Main.storyboard */,
 				00C5B53A2154D413000D1B3F /* Info.plist */,
@@ -73,7 +158,9 @@
 		37D842FF50B59A81E10245BD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				004DF50021573EB000640B8E /* UserNotifications.framework */,
 				C04118384E5B7A09215E897D /* Pods_AutoTimesheet.framework */,
+				0377A24A2B9087E5C26E1B21 /* Pods_AutoTimesheetTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -83,6 +170,8 @@
 			children = (
 				BCD70B5D2632AB8F17205E84 /* Pods-AutoTimesheet.debug.xcconfig */,
 				38ACA384668EF2AAA3343375 /* Pods-AutoTimesheet.release.xcconfig */,
+				AA9567120951C78EDA8758D3 /* Pods-AutoTimesheetTests.debug.xcconfig */,
+				E87405FB566FF288764A4DB1 /* Pods-AutoTimesheetTests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -90,6 +179,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		0067991821565F51005E1E8C /* AutoTimesheetTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0067992021565F51005E1E8C /* Build configuration list for PBXNativeTarget "AutoTimesheetTests" */;
+			buildPhases = (
+				DA37E2D7DDCD5146814E976C /* [CP] Check Pods Manifest.lock */,
+				0067991521565F51005E1E8C /* Sources */,
+				0067991621565F51005E1E8C /* Frameworks */,
+				0067991721565F51005E1E8C /* Resources */,
+				097957FF19896B6D9C8FB6DF /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0067991F21565F51005E1E8C /* PBXTargetDependency */,
+			);
+			name = AutoTimesheetTests;
+			productName = AutoTimesheetTests;
+			productReference = 0067991921565F51005E1E8C /* AutoTimesheetTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		00C5B52D2154D412000D1B3F /* AutoTimesheet */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 00C5B53E2154D413000D1B3F /* Build configuration list for PBXNativeTarget "AutoTimesheet" */;
@@ -119,8 +228,17 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Savvycom JSC";
 				TargetAttributes = {
+					0067991821565F51005E1E8C = {
+						CreatedOnToolsVersion = 10.0;
+						TestTargetID = 00C5B52D2154D412000D1B3F;
+					};
 					00C5B52D2154D412000D1B3F = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -138,11 +256,19 @@
 			projectRoot = "";
 			targets = (
 				00C5B52D2154D412000D1B3F /* AutoTimesheet */,
+				0067991821565F51005E1E8C /* AutoTimesheetTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		0067991721565F51005E1E8C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00C5B52C2154D412000D1B3F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -163,16 +289,46 @@
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-AutoTimesheet/Pods-AutoTimesheet-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/LoginServiceKit/LoginServiceKit.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LoginServiceKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutoTimesheet/Pods-AutoTimesheet-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		097957FF19896B6D9C8FB6DF /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-AutoTimesheetTests/Pods-AutoTimesheetTests-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
+				"${BUILT_PRODUCTS_DIR}/SwiftDate/SwiftDate.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftDate.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-AutoTimesheetTests/Pods-AutoTimesheetTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		D8FEB4E68AA539F95E13329C /* [CP] Check Pods Manifest.lock */ = {
@@ -193,19 +349,76 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		DA37E2D7DDCD5146814E976C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-AutoTimesheetTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		0067991521565F51005E1E8C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				006799302156B848005E1E8C /* AutoTimesheetTests.swift in Sources */,
+				0067992B2156AFBA005E1E8C /* Curry.swift in Sources */,
+				00903C152156B979008F8BCE /* MockServices.swift in Sources */,
+				0067992A2156A77B005E1E8C /* Either.swift in Sources */,
+				0067992321565F8E005E1E8C /* Project.swift in Sources */,
+				00903C132156B96E008F8BCE /* Enviroment.swift in Sources */,
+				00903C142156B975008F8BCE /* Services.swift in Sources */,
+				006799242156614E005E1E8C /* Functions.swift in Sources */,
+				009E4D76215806D4009E56B9 /* LogTimesheetResponse.swift in Sources */,
+				0067992C2156AFC0005E1E8C /* Operators.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		00C5B52A2154D412000D1B3F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00C5B5342154D412000D1B3F /* ViewController.swift in Sources */,
+				00C21C9C215520F200449FCC /* Curry.swift in Sources */,
+				0067992E2156B4E6005E1E8C /* Enviroment.swift in Sources */,
+				00C21CA12155236700449FCC /* Operators.swift in Sources */,
+				0067991221564E86005E1E8C /* MockServices.swift in Sources */,
 				00C5B5322154D412000D1B3F /* AppDelegate.swift in Sources */,
+				00C21C9F2155211C00449FCC /* Functions.swift in Sources */,
+				0067990E21564BB1005E1E8C /* Services.swift in Sources */,
+				00C23C02215746D0003BAD11 /* Notification.swift in Sources */,
+				0067992921569FEC005E1E8C /* Either.swift in Sources */,
+				009E4D7521580587009E56B9 /* LogTimesheetResponse.swift in Sources */,
+				008EC0152157826100A10E7C /* ProjectVC.swift in Sources */,
+				0067991421565247005E1E8C /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0067991F21565F51005E1E8C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 00C5B52D2154D412000D1B3F /* AutoTimesheet */;
+			targetProxy = 0067991E21565F51005E1E8C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		00C5B5372154D413000D1B3F /* Main.storyboard */ = {
@@ -219,6 +432,50 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		0067992121565F51005E1E8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AA9567120951C78EDA8758D3 /* Pods-AutoTimesheetTests.debug.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = XJB7KJXDMH;
+				INFOPLIST_FILE = AutoTimesheetTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Savvycom.AutoTimesheetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AutoTimesheet.app/Contents/MacOS/AutoTimesheet";
+			};
+			name = Debug;
+		};
+		0067992221565F51005E1E8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E87405FB566FF288764A4DB1 /* Pods-AutoTimesheetTests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = XJB7KJXDMH;
+				INFOPLIST_FILE = AutoTimesheetTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.Savvycom.AutoTimesheetTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 4.2;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/AutoTimesheet.app/Contents/MacOS/AutoTimesheet";
+			};
+			name = Release;
+		};
 		00C5B53C2154D413000D1B3F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -340,15 +597,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AutoTimesheet/AutoTimesheet.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = XJB7KJXDMH;
 				INFOPLIST_FILE = AutoTimesheet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.savvycom.AutoTimesheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
@@ -359,15 +620,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = AutoTimesheet/AutoTimesheet.entitlements;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = XJB7KJXDMH;
 				INFOPLIST_FILE = AutoTimesheet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				PRODUCT_BUNDLE_IDENTIFIER = com.savvycom.AutoTimesheet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
@@ -375,6 +640,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		0067992021565F51005E1E8C /* Build configuration list for PBXNativeTarget "AutoTimesheetTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0067992121565F51005E1E8C /* Debug */,
+				0067992221565F51005E1E8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		00C5B5292154D412000D1B3F /* Build configuration list for PBXProject "AutoTimesheet" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

@@ -7,4 +7,14 @@ target 'AutoTimesheet' do
 
   # Pods for AutoTimesheet
   pod 'PromiseKit/Alamofire'
+  pod 'SwiftDate'
+  pod 'LoginServiceKit', :git => 'https://github.com/Clipy/LoginServiceKit.git'
+end
+
+target 'AutoTimesheetTests' do
+    use_frameworks!
+    
+    # Pods for AutoTimesheet
+    pod 'PromiseKit/Alamofire'
+    pod 'SwiftDate'
 end

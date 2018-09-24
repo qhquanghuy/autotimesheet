@@ -1,0 +1,6 @@
+framework module Pods_AutoTimesheetTests {
+  umbrella header "Pods-AutoTimesheetTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
