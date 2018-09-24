@@ -28,7 +28,7 @@ enum NilError: Error {
 }
 
 
-func optionalThrows<A> (_ x: A?) throws -> A {
+func optionalThrows<A> (_ x: A?, throw: Error = NilError.gotNil) throws -> A {
     guard let a = x  else {
         throw NilError.gotNil
     }

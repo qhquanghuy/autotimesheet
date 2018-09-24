@@ -43,7 +43,7 @@ struct MockService: ServiceType {
     }
     
     
-    func logTimesheet(for projects: [Project], at date: Date) -> Promise<LogTimesheetResponse> {
+    func logTimesheet(for projects: Set<Project>, at date: Date) -> Promise<LogTimesheetResponse> {
         
         return Promise.value(LogTimesheetResponse.mock)
         

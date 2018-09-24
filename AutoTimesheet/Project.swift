@@ -10,7 +10,7 @@ import Foundation
 
 
 struct ProjectResponse: Decodable, Equatable {
-    let items: [Project]
+    let items: Set<Project>
     
     enum CodingKeys: String, CodingKey {
         case items
@@ -22,7 +22,7 @@ extension ProjectResponse {
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         let _items = try values.decode([String: Project].self, forKey: .items)
-        self.items = _items.map { $0.value }
+        self.items = Set.init(_items.values)
     }
     static let mock = ProjectResponse(items: [
         .mock,
@@ -32,12 +32,12 @@ extension ProjectResponse {
 }
 
 
-public struct Project: Codable, Equatable {
+public struct Project {
     let id: Int
     let name: String
-    let wkTime: Double
-    let oTime: Double
-    let des: String
+    var wkTime: Double
+    var oTime: Double
+    var des: String
     let isOtApproved: Bool
     
    
@@ -52,12 +52,17 @@ public struct Project: Codable, Equatable {
     
 }
 
-extension Project {
+extension Project: Codable {
         
     public init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
         
-        self.id = try optionalThrows(decoder.codingPath.first { $0.intValue != nil }?.intValue)
+        let _id = try? values.decode(Int.self, forKey: .id)
+        if let id = _id {
+            self.id = id
+        } else {
+            self.id = try optionalThrows(decoder.codingPath.first { $0.intValue != nil }?.intValue)
+        }
         self.name = try values.decode(String.self, forKey: .name)
         self.des = try values.decode(String.self, forKey: .des)
         
@@ -79,10 +84,20 @@ extension Project {
         try container.encode(self.oTime, forKey: .oTime)
         try container.encode(self.des, forKey: .des)
         try container.encode(self.id, forKey: .id)
+        try container.encode(self.isOtApproved ? 1 : 0, forKey: .isOtApproved)
     }
     
 }
 
+extension Project: Hashable {
+   
+}
+
 extension Project {
-    static let mock = Project(id: 9, name: "Other", wkTime: 3, oTime: 0, des: "Reading articles", isOtApproved: false)
+    static let mock = Project(id: 9,
+                              name: "Other",
+                              wkTime: Current.configuration.defaultWkTime,
+                              oTime: 0,
+                              des: Current.configuration.defaultWkDes,
+                              isOtApproved: false)
 }

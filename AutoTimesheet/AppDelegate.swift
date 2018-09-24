@@ -8,7 +8,6 @@
 
 import Cocoa
 
-import PromiseKit
 import SwiftDate
 import LoginServiceKit
 
@@ -25,6 +24,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return statusItem
     }()
     
+    
+    
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -37,27 +38,19 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } else {
         }
         
+//        Current = .mock
+        let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
+                                             minute: Current.configuration.fireTime.minute!,
+                                             second: Current.configuration.fireTime.second!,
+                                             of: Current.date())!
+        let timer: Timer = Timer.init(fire: fireDate,
+                                      interval: Current.configuration.fireInterval.timeInterval,
+                                      repeats: true,
+                                      block: const(logTimesheet()))
         
-        Current = .mock
-        Current.service.login(credential: Current.credential)
-            .map { $0.response }
-            .compactMap(getLastCookie)
-            .done(HTTPCookieStorage.shared.setCookie)
-            .then { Current.service.getProjectStatusAt(date: Current.date() - 2.days) }
-            .then { _ in
-                Current.service.logTimesheet(for: ProjectResponse.mock.items, at: Current.date() )
-            }
-            .map { try $0.validated() }
-            .done { res in
-                print(res)
-            }
-            .catch {
-                Current.notifcation.localPush(notification: NotifcationDetail(title: Current.appName,
-                                                                              subtitle: "Error",
-                                                                              infomativeText: $0.localizedDescription,
-                                                                              soundName: NSUserNotificationDefaultSoundName))
-            }
- 
+      
+        RunLoop.main.add(timer, forMode: .default)
+        
     }
     
     
@@ -73,33 +66,4 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
 
 
-}
-
-
-
-
-
-func getLastCookie(response: PMKAlamofireDataResponse) -> HTTPCookie? {
-    guard
-        let header = response.response?.allHeaderFields as? [String: String],
-        let url = response.request?.url
-        else {
-            return nil
-    }
-    let last = HTTPCookie.cookies(withResponseHeaderFields: header, for: url).last
-    return last
-}
-
-
-func headerFormat(cookie: HTTPCookie) -> String {
-    func cookieFormat(name: String, value: String) -> String{
-        return "\(name)=\(value)"
-    }
-    return [
-        cookieFormat(name: cookie.name, value: cookie.value),
-        cookieFormat(name: "path", value: cookie.path),
-        cookieFormat(name: "domain", value: cookie.domain),
-        cookie.isSecure ? "Secure" : "",
-        cookie.isHTTPOnly ? "HttpOnly" : ""
-        ].joined(separator: ";")
 }

@@ -14,7 +14,7 @@ protocol ServiceType {
     
     func login(credential: Credential) -> Promise<(json: Any, response: PMKAlamofireDataResponse)>
     func getProjectStatusAt(date: Date) -> Promise<ProjectResponse>
-    func logTimesheet(for projects: [Project], at date: Date) -> Promise<LogTimesheetResponse>
+    func logTimesheet(for projects: Set<Project>, at date: Date) -> Promise<LogTimesheetResponse>
 }
 
 
@@ -49,7 +49,7 @@ struct TimesheetService: ServiceType {
     }
     
     
-    func logTimesheet(for projects: [Project], at date: Date) -> Promise<LogTimesheetResponse> {
+    func logTimesheet(for projects: Set<Project>, at date: Date) -> Promise<LogTimesheetResponse> {
         let formatter = DateFormatter()
         
         formatter.dateFormat = "dd-MM-yyyy"

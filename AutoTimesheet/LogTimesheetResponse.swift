@@ -38,7 +38,7 @@ extension LogTimesheetResponse: Decodable {
     
 }
 extension LogTimesheetResponse {
-    static let mock: LogTimesheetResponse = .init(status: .error, message: "This day you absent")
+    static let mock: LogTimesheetResponse = .init(status: .success, message: "Fill time sheet success fully")
 }
 
 extension Status: Decodable {

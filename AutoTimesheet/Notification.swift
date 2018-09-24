@@ -10,7 +10,7 @@ import Foundation
 
 
 
-protocol NotificationType {
+protocol NotificationCenterType {
     func localPush(notification: NotifcationDetailType)
 }
 
@@ -34,7 +34,7 @@ struct NotifcationDetail: NotifcationDetailType {
 }
 
 
-struct NotificationCenter: NotificationType {
+struct NotificationCenter: NotificationCenterType {
     func localPush(notification: NotifcationDetailType) {
         let userNotificaton = NSUserNotification()
         userNotificaton.soundName = notification.soundName
@@ -44,6 +44,13 @@ struct NotificationCenter: NotificationType {
         NSUserNotificationCenter.default.deliver(userNotificaton)
     }
     
+    
+}
+
+struct MockNotificationCenter: NotificationCenterType {
+    func localPush(notification: NotifcationDetailType) {
+        print(notification)
+    }
     
 }
 

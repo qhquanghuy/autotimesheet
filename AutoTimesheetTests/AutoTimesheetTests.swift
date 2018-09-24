@@ -18,6 +18,26 @@ class AutoTimesheetTests: XCTestCase {
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
+    
+   
+    
+    func testAddNewProjectsIfNeeded() {
+        let savedProject: Set<Project> = try! Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
+        print(savedProject)
+        let newProjects = try! saveNewProjectsIfNeeded(projects: [Project.init(id: 9, name: "Other", wkTime: 3, oTime: 0, des: "", isOtApproved: false)])
+
+        XCTAssertTrue(savedProject.map(identity).sorted { $0.id < $1.id } != newProjects.map(identity).sorted { $0.id < $1.id })
+
+        let newProjects2 = try! saveNewProjectsIfNeeded(projects: [Project.init(id: 100, name: "abcd", wkTime: 4.5, oTime: 0, des: "da", isOtApproved: false), Project.init(id: 9, name: "Other", wkTime: 3, oTime: 0, des: "", isOtApproved: false)])
+
+        XCTAssertFalse(newProjects.map(identity).sorted { $0.id < $1.id } == newProjects2.map(identity).sorted { $0.id < $1.id })
+
+        let savedProject2: Set<Project> = try! Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
+        XCTAssertEqual(newProjects2.map(identity).sorted { $0.id < $1.id }, savedProject2.map(identity).sorted { $0.id < $1.id })
+        
+        
+
+    }
 
     func testService() {
         
@@ -38,9 +58,9 @@ class AutoTimesheetTests: XCTestCase {
             let response = try decoder.decode(ProjectResponse.self, from: data)
             let sorted = response.items.sorted { $0.id < $1.id }
             
-            let expected = ProjectResponse.mock
+            let expected = ProjectResponse.mock.items.sorted { $0.id < $1.id }
                         
-            XCTAssertEqual(sorted, expected.items)
+            XCTAssertEqual(sorted, expected)
             
         } catch let err {
             print(err)

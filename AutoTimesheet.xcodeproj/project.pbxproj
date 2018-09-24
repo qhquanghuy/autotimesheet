@@ -31,6 +31,11 @@
 		00C5B5322154D412000D1B3F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C5B5312154D412000D1B3F /* AppDelegate.swift */; };
 		00C5B5362154D413000D1B3F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00C5B5352154D413000D1B3F /* Assets.xcassets */; };
 		00C5B5392154D413000D1B3F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00C5B5372154D413000D1B3F /* Main.storyboard */; };
+		00D49EAD2158C33700CA2132 /* AppdelegateFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D49EAC2158C33700CA2132 /* AppdelegateFunctions.swift */; };
+		00D49EAE2158D8CA00CA2132 /* AppdelegateFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D49EAC2158C33700CA2132 /* AppdelegateFunctions.swift */; };
+		00D49EAF2158D92500CA2132 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C23C01215746D0003BAD11 /* Notification.swift */; };
+		00D49EB12158D9D500CA2132 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D49EB02158D9D500CA2132 /* KeyValueStorage.swift */; };
+		00D49EB22158DA5B00CA2132 /* KeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D49EB02158D9D500CA2132 /* KeyValueStorage.swift */; };
 		7103C4F26B8F78BA45FAC417 /* Pods_AutoTimesheet.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C04118384E5B7A09215E897D /* Pods_AutoTimesheet.framework */; };
 		D8867001084ACF9D9419F9F3 /* Pods_AutoTimesheetTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0377A24A2B9087E5C26E1B21 /* Pods_AutoTimesheetTests.framework */; };
 /* End PBXBuildFile section */
@@ -67,6 +72,8 @@
 		00C5B5382154D413000D1B3F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		00C5B53A2154D413000D1B3F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00C5B53B2154D413000D1B3F /* AutoTimesheet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = AutoTimesheet.entitlements; sourceTree = "<group>"; };
+		00D49EAC2158C33700CA2132 /* AppdelegateFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppdelegateFunctions.swift; sourceTree = "<group>"; };
+		00D49EB02158D9D500CA2132 /* KeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyValueStorage.swift; sourceTree = "<group>"; };
 		0377A24A2B9087E5C26E1B21 /* Pods_AutoTimesheetTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AutoTimesheetTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38ACA384668EF2AAA3343375 /* Pods-AutoTimesheet.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoTimesheet.release.xcconfig"; path = "Pods/Target Support Files/Pods-AutoTimesheet/Pods-AutoTimesheet.release.xcconfig"; sourceTree = "<group>"; };
 		AA9567120951C78EDA8758D3 /* Pods-AutoTimesheetTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AutoTimesheetTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-AutoTimesheetTests/Pods-AutoTimesheetTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -140,8 +147,10 @@
 			children = (
 				00C21C9D2155210900449FCC /* Prelude */,
 				0067992D2156B4E6005E1E8C /* Enviroment.swift */,
+				00D49EB02158D9D500CA2132 /* KeyValueStorage.swift */,
 				00C23C01215746D0003BAD11 /* Notification.swift */,
 				00C5B5312154D412000D1B3F /* AppDelegate.swift */,
+				00D49EAC2158C33700CA2132 /* AppdelegateFunctions.swift */,
 				0067990D21564BB1005E1E8C /* Services.swift */,
 				0067991121564E86005E1E8C /* MockServices.swift */,
 				009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */,
@@ -386,7 +395,10 @@
 				00903C132156B96E008F8BCE /* Enviroment.swift in Sources */,
 				00903C142156B975008F8BCE /* Services.swift in Sources */,
 				006799242156614E005E1E8C /* Functions.swift in Sources */,
+				00D49EAF2158D92500CA2132 /* Notification.swift in Sources */,
 				009E4D76215806D4009E56B9 /* LogTimesheetResponse.swift in Sources */,
+				00D49EB22158DA5B00CA2132 /* KeyValueStorage.swift in Sources */,
+				00D49EAE2158D8CA00CA2132 /* AppdelegateFunctions.swift in Sources */,
 				0067992C2156AFC0005E1E8C /* Operators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -400,9 +412,11 @@
 				00C21CA12155236700449FCC /* Operators.swift in Sources */,
 				0067991221564E86005E1E8C /* MockServices.swift in Sources */,
 				00C5B5322154D412000D1B3F /* AppDelegate.swift in Sources */,
+				00D49EB12158D9D500CA2132 /* KeyValueStorage.swift in Sources */,
 				00C21C9F2155211C00449FCC /* Functions.swift in Sources */,
 				0067990E21564BB1005E1E8C /* Services.swift in Sources */,
 				00C23C02215746D0003BAD11 /* Notification.swift in Sources */,
+				00D49EAD2158C33700CA2132 /* AppdelegateFunctions.swift in Sources */,
 				0067992921569FEC005E1E8C /* Either.swift in Sources */,
 				009E4D7521580587009E56B9 /* LogTimesheetResponse.swift in Sources */,
 				008EC0152157826100A10E7C /* ProjectVC.swift in Sources */,
@@ -440,7 +454,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = XJB7KJXDMH;
+				DEVELOPMENT_TEAM = DLCDHPW8GE;
 				INFOPLIST_FILE = AutoTimesheetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -462,7 +476,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = XJB7KJXDMH;
+				DEVELOPMENT_TEAM = DLCDHPW8GE;
 				INFOPLIST_FILE = AutoTimesheetTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -600,7 +614,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = XJB7KJXDMH;
+				DEVELOPMENT_TEAM = DLCDHPW8GE;
 				INFOPLIST_FILE = AutoTimesheet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -623,7 +637,7 @@
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				DEVELOPMENT_TEAM = XJB7KJXDMH;
+				DEVELOPMENT_TEAM = DLCDHPW8GE;
 				INFOPLIST_FILE = AutoTimesheet/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
