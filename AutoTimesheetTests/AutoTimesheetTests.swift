@@ -19,26 +19,51 @@ class AutoTimesheetTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-   
     
     func testAddNewProjectsIfNeeded() {
-        let savedProject: Set<Project> = try! Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
-        print(savedProject)
-        let newProjects = try! saveNewProjectsIfNeeded(projects: [Project.init(id: 9, name: "Other", wkTime: 3, oTime: 0, des: "", isOtApproved: false)])
+        Current = .mock
+        let key = KeyValueStorageKey.todayProjects
 
-        XCTAssertTrue(savedProject.map(identity).sorted { $0.id < $1.id } != newProjects.map(identity).sorted { $0.id < $1.id })
+        let sortProject: (Set<Project>) -> [Project] = { $0.map(identity).sorted { $0.id < $1.id } }
 
-        let newProjects2 = try! saveNewProjectsIfNeeded(projects: [Project.init(id: 100, name: "abcd", wkTime: 4.5, oTime: 0, des: "da", isOtApproved: false), Project.init(id: 9, name: "Other", wkTime: 3, oTime: 0, des: "", isOtApproved: false)])
+        let projects = ProjectResponse.mock.items
 
-        XCTAssertFalse(newProjects.map(identity).sorted { $0.id < $1.id } == newProjects2.map(identity).sorted { $0.id < $1.id })
+        try! Current.keyValueStorage.saveThrows(projects, forKey: key)
 
-        let savedProject2: Set<Project> = try! Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
-        XCTAssertEqual(newProjects2.map(identity).sorted { $0.id < $1.id }, savedProject2.map(identity).sorted { $0.id < $1.id })
+        let retriveProjects: Set<Project> = try! Current.keyValueStorage.loadThrows(key: key)
+
+        XCTAssertEqual(projects |> sortProject, retriveProjects |> sortProject)
+
+        var incomingProj = ProjectResponse.mock.items.map(identity)
+        let otherIdx = incomingProj.firstIndex { $0.id == 9 }
+        incomingProj[otherIdx!].des  = "new des"
+
+
+
+        let newSaved = try! saveNewProjectsIfNeeded(projects: Set(incomingProj))
+        
+        XCTAssertTrue(newSaved.isEmpty)
+        let newPr = Project.init(id: 100, name: "DonotKnow", wkTime: 8, oTime: 0, des: "", isOtApproved: false)
+        let newPr2 = Project.init(id: 101, name: "DonotKnowwhatisthis", wkTime: 0, oTime: 0, des: "", isOtApproved: false)
+        incomingProj.append(newPr)
+        incomingProj.append(newPr2)
+        let newSaved2 = try! saveNewProjectsIfNeeded(projects: Set(incomingProj))
+        
+        XCTAssertEqual(newSaved2 |> sortProject, [newPr, newPr2])
         
         
-
+        do {
+            let projToLog = try loadProjectFromStorageToLogSheet()
+            XCTAssertEqual(projToLog |> sortProject, [.init(id: 9, name: "Other", wkTime: 4.5, oTime: 0, des: "Reading articles", isOtApproved: false), newPr])
+        } catch let err {
+            print(err)
+        }
+        
+        
+        
     }
-
+   
+    
     func testService() {
         
     }

@@ -15,17 +15,24 @@ struct Credential {
 }
 
 struct Configuration {
-    let fireTime: DateComponents = {
-        var _fireTime = 15.hours
-        _fireTime.minute = 24
+    var fireTime: DateComponents = {
+        var _fireTime = 17.hours
+        _fireTime.minute = 30
         _fireTime.second = 0
         return _fireTime
     }()
     
-    let fireInterval = 1.minutes
+    var fireInterval = 1.days
     
-    let defaultWkTime = 4.5
-    let defaultWkDes = "Reading articles"
+    var defaultWkTime = 4.5
+    var defaultWkDes = "Reading articles"
+    
+    static let mock = Configuration(fireTime: {
+        var _fireTime = 17.hours
+        _fireTime.minute = 30
+        _fireTime.second = 0
+        return _fireTime
+    }(), fireInterval: 1.minutes, defaultWkTime: 4.5, defaultWkDes: "Reading articles")
 }
 
 
@@ -55,9 +62,9 @@ extension Enviroment {
     static let mock = Enviroment(service: MockService(),
                                  date: { Date(year: 2018, month: 9, day: 24, hour: 0, minute: 0) },
                                  calendar: Calendar.current,
-                                 configuration: Configuration(),
+                                 configuration: .mock,
                                  notifcation: MockNotificationCenter(),
-                                 keyValueStorage: UserDefaults.standard)
+                                 keyValueStorage: MockKeyValueStorage())
 }
 
 var Current: Enviroment = .init()

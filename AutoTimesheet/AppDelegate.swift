@@ -33,23 +33,29 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let menuItem = NSMenuItem.init(title: "Quit", action: #selector(self.onTapQuit), keyEquivalent: "q")
         statusItem.menu?.addItem(menuItem)
         
-        if !LoginServiceKit.isExistLoginItems() {
-            LoginServiceKit.addLoginItems()
-        } else {
-        }
         
+        
+        Current.service.getProjectStatusAt(date: Current.date()).done { print($0) }.catch { print($0.localizedDescription) }
+        
+        
+        
+//        if !LoginServiceKit.isExistLoginItems() {
+//            LoginServiceKit.addLoginItems()
+//        } else {
+//        }
+//        
 //        Current = .mock
-        let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
-                                             minute: Current.configuration.fireTime.minute!,
-                                             second: Current.configuration.fireTime.second!,
-                                             of: Current.date())!
-        let timer: Timer = Timer.init(fire: fireDate,
-                                      interval: Current.configuration.fireInterval.timeInterval,
-                                      repeats: true,
-                                      block: const(logTimesheet()))
-        
-      
-        RunLoop.main.add(timer, forMode: .default)
+//        let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
+//                                             minute: Current.configuration.fireTime.minute!,
+//                                             second: Current.configuration.fireTime.second!,
+//                                             of: Current.date())!
+//        let timer: Timer = Timer.init(fire: fireDate,
+//                                      interval: Current.configuration.fireInterval.timeInterval,
+//                                      repeats: true,
+//                                      block: const(timerLogTimesheet()))
+//
+//
+//        RunLoop.main.add(timer, forMode: .default)
         
     }
     

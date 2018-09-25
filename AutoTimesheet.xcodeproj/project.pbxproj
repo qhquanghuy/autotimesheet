@@ -18,6 +18,8 @@
 		0067992C2156AFC0005E1E8C /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00C21CA02155236700449FCC /* Operators.swift */; };
 		0067992E2156B4E6005E1E8C /* Enviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992D2156B4E6005E1E8C /* Enviroment.swift */; };
 		006799302156B848005E1E8C /* AutoTimesheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */; };
+		006E525421593F880089587F /* MockKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E525321593F880089587F /* MockKeyValueStorage.swift */; };
+		006E52552159469E0089587F /* MockKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E525321593F880089587F /* MockKeyValueStorage.swift */; };
 		008EC0152157826100A10E7C /* ProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008EC0142157826100A10E7C /* ProjectVC.swift */; };
 		00903C132156B96E008F8BCE /* Enviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992D2156B4E6005E1E8C /* Enviroment.swift */; };
 		00903C142156B975008F8BCE /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067990D21564BB1005E1E8C /* Services.swift */; };
@@ -60,6 +62,7 @@
 		0067992821569FEC005E1E8C /* Either.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Either.swift; sourceTree = "<group>"; };
 		0067992D2156B4E6005E1E8C /* Enviroment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enviroment.swift; sourceTree = "<group>"; };
 		0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTimesheetTests.swift; sourceTree = "<group>"; };
+		006E525321593F880089587F /* MockKeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockKeyValueStorage.swift; sourceTree = "<group>"; };
 		008EC0142157826100A10E7C /* ProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectVC.swift; sourceTree = "<group>"; };
 		009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogTimesheetResponse.swift; sourceTree = "<group>"; };
 		00C21C9B215520F200449FCC /* Curry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Curry.swift; sourceTree = "<group>"; };
@@ -148,6 +151,7 @@
 				00C21C9D2155210900449FCC /* Prelude */,
 				0067992D2156B4E6005E1E8C /* Enviroment.swift */,
 				00D49EB02158D9D500CA2132 /* KeyValueStorage.swift */,
+				006E525321593F880089587F /* MockKeyValueStorage.swift */,
 				00C23C01215746D0003BAD11 /* Notification.swift */,
 				00C5B5312154D412000D1B3F /* AppDelegate.swift */,
 				00D49EAC2158C33700CA2132 /* AppdelegateFunctions.swift */,
@@ -394,6 +398,7 @@
 				0067992321565F8E005E1E8C /* Project.swift in Sources */,
 				00903C132156B96E008F8BCE /* Enviroment.swift in Sources */,
 				00903C142156B975008F8BCE /* Services.swift in Sources */,
+				006E52552159469E0089587F /* MockKeyValueStorage.swift in Sources */,
 				006799242156614E005E1E8C /* Functions.swift in Sources */,
 				00D49EAF2158D92500CA2132 /* Notification.swift in Sources */,
 				009E4D76215806D4009E56B9 /* LogTimesheetResponse.swift in Sources */,
@@ -411,6 +416,7 @@
 				0067992E2156B4E6005E1E8C /* Enviroment.swift in Sources */,
 				00C21CA12155236700449FCC /* Operators.swift in Sources */,
 				0067991221564E86005E1E8C /* MockServices.swift in Sources */,
+				006E525421593F880089587F /* MockKeyValueStorage.swift in Sources */,
 				00C5B5322154D412000D1B3F /* AppDelegate.swift in Sources */,
 				00D49EB12158D9D500CA2132 /* KeyValueStorage.swift in Sources */,
 				00C21C9F2155211C00449FCC /* Functions.swift in Sources */,
