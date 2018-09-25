@@ -30,36 +30,39 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         
-        let menuItem = NSMenuItem.init(title: "Quit", action: #selector(self.onTapQuit), keyEquivalent: "q")
-        statusItem.menu?.addItem(menuItem)
+        let quitItem = NSMenuItem.init(title: "Quit", action: #selector(self.onTapQuit), keyEquivalent: "q")
+        
+        let preferenceItem = NSMenuItem.init(title: "Preference", action: #selector(self.ontapPreference), keyEquivalent: "P")
+        statusItem.menu?.addItem(preferenceItem)
+        statusItem.menu?.addItem(quitItem)
         
         
-        
-        Current.service.getProjectStatusAt(date: Current.date()).done { print($0) }.catch { print($0.localizedDescription) }
-        
-        
-        
-//        if !LoginServiceKit.isExistLoginItems() {
-//            LoginServiceKit.addLoginItems()
-//        } else {
-//        }
-//        
-//        Current = .mock
-//        let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
-//                                             minute: Current.configuration.fireTime.minute!,
-//                                             second: Current.configuration.fireTime.second!,
-//                                             of: Current.date())!
-//        let timer: Timer = Timer.init(fire: fireDate,
-//                                      interval: Current.configuration.fireInterval.timeInterval,
-//                                      repeats: true,
-//                                      block: const(timerLogTimesheet()))
-//
-//
-//        RunLoop.main.add(timer, forMode: .default)
+
+        if !LoginServiceKit.isExistLoginItems() {
+            LoginServiceKit.addLoginItems()
+        } else {
+        }
+
+        let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
+                                             minute: Current.configuration.fireTime.minute!,
+                                             second: Current.configuration.fireTime.second!,
+                                             of: Current.date())!
+        let timer: Timer = Timer.init(fire: fireDate,
+                                      interval: Current.configuration.fireInterval.timeInterval,
+                                      repeats: true,
+                                      block: const(timerLogTimesheet()))
+
+
+        RunLoop.main.add(timer, forMode: .default)
         
     }
     
-    
+    @objc func ontapPreference() {
+        let storyboard = NSStoryboard.init(name: "Main", bundle: nil)
+        let wc = storyboard.instantiateController(withIdentifier: "MainWC") as! NSWindowController
+        NSApp.activate(ignoringOtherApps: true)
+        wc.showWindow(self)
+    }
     
     @objc func onTapQuit() {
         NSApp.terminate(self)

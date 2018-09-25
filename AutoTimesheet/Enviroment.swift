@@ -41,6 +41,10 @@ struct KeyValueStorageKey {
 }
 
 
+struct AutoTimesheetErrorMessage {
+    let alreadyLoggedTimesheet = "You've already logged timesheet for today"
+    let addedNewProject = "You've added new project, auto timesheet for today will suspend, please configure auto time sheet then submit it manually!"
+}
 
 struct Enviroment {
     var service: ServiceType = TimesheetService()
@@ -51,7 +55,7 @@ struct Enviroment {
     var keyValueStorage: KeyValueStorage = UserDefaults.standard
     
     
-    
+    let errorMessage = AutoTimesheetErrorMessage()
     let credential = Credential(email: "quanghuy.nguyen@savvycomsoftware.com",
                                 password: "123456789")
     

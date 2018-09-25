@@ -11,6 +11,20 @@ import PromiseKit
 import SwiftDate
 
 
+func rebind(responsedProjects: Set<Project>, savedProjects: Set<Project>) -> Set<Project> {
+    var _projects = responsedProjects.reduce(into: [Int: Project]()) { (res: inout [Int: Project], proj) in
+        res[proj.id] = proj
+    }
+    for proj in savedProjects {
+        if _projects[proj.id] != nil && proj.wkTime != 0 {
+            _projects[proj.id]?.wkTime = proj.wkTime
+            _projects[proj.id]?.des = proj.des
+        }
+    }
+    return Set(_projects.values)
+}
+
+
 /// Save new project if local storage does not have that project,
 /// update (wkTime, des) responsed project with correspondence project from local storage
 /// then save all responsed to local storage (ovver write local storage)
@@ -19,26 +33,18 @@ import SwiftDate
 /// - Returns: new project added to local storage
 /// - Throws: re-throw exception from localStorage
 func saveNewProjectsIfNeeded(projects: Set<Project>) throws -> Set<Project> {
-    var _projects = projects.reduce(into: [Int: Project]()) { (res: inout [Int: Project], proj) in
-        res[proj.id] = proj
-    }
-    
+    var _projects = projects
     let newProjects: Set<Project>
+    let savedProjects: Set<Project>? = try? Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
     
-    if let savedPrjects: Set<Project> = try? Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects) {
-        for proj in savedPrjects {
-            if _projects[proj.id] != nil && proj.wkTime != 0 {
-                _projects[proj.id]?.wkTime = proj.wkTime
-                _projects[proj.id]?.des = proj.des
-            }
-        }
+    if let savedProjects = savedProjects {
+        _projects = rebind(responsedProjects: _projects, savedProjects: savedProjects)
         
-        newProjects = projects.filter({proj in !savedPrjects.contains { $0.id == proj.id }})
-    } else {
-        newProjects = projects
     }
     
-    try Current.keyValueStorage.saveThrows(Set(_projects.values), forKey: KeyValueStorageKey.todayProjects)
+    newProjects = savedProjects.map { saved in projects.filter({proj in !saved.contains { $0.id == proj.id }}) } ?? projects
+    
+    try Current.keyValueStorage.saveThrows(Set(_projects), forKey: KeyValueStorageKey.todayProjects)
     return newProjects
 }
 
@@ -79,21 +85,48 @@ func logInThenSaveCookie() -> Promise<()> {
                         .done(HTTPCookieStorage.shared.setCookie)
 }
 
+/// Check if responsed projects are logged
+///
+/// - Parameter projects: responsed projects
+/// - Returns: a tupple that left is a optional notifcation for user if projects are logged, right is responsed projects
+func checkIfAlreadyLoggedTimesheet(projects: Set<Project>) -> (NotificationDetail?, Set<Project>) {
+    if projects.allSatisfy({ $0.wkTime == 0 }) {
+        return (nil, projects)
+    } else {
+        return (NotificationDetail( subtitle: "", infomativeText: Current.errorMessage.alreadyLoggedTimesheet), projects)
+    }
+}
+
+
+func checkIfAddedNewProject(projects: Set<Project>) -> NotificationDetail? {
+    return projects.isEmpty ? nil : NotificationDetail(subtitle: "", infomativeText: Current.errorMessage.addedNewProject)
+}
+
+func formatLoggedMessage(projects: Set<Project>) -> String {
+    return "\n" + projects.map { "\($0.name) - \($0.wkTime)h - \($0.des)" }.joined(separator: "\n")
+}
+
+func logTimesheet() -> Promise<NotificationDetail> {
+    do {
+        let configuredProjects = try loadProjectFromStorageToLogSheet() |> configureLogTimesheetMessage
+        return Current.service
+            .logTimesheet(for: configuredProjects, at: Current.date())
+            .map { NotificationDetail(subtitle: $0.status.rawValue.uppercased(),
+                                      infomativeText: $0.message + (configuredProjects |> formatLoggedMessage))  }
+    } catch let err {
+        return .init(error: err)
+    }
+}
+
+
 func timerLogTimesheet() {
     logInThenSaveCookie()
         .then { Current.service.getProjectStatusAt(date: Current.date()) }
-        .map { try saveNewProjectsIfNeeded(projects: $0.items) }
-        .map { _ in try loadProjectFromStorageToLogSheet() }
-        .map(configureLogTimesheetMessage)
-        .then {
-            Current.service.logTimesheet(for: $0, at: Current.date())
-        }
-        .done { res in
-            Current.notifcation.localPush(notification: NotifcationDetail(title: Current.appName,
-                                                                          subtitle: res.status.rawValue,
-                                                                          infomativeText: res.message,
-                                                                          soundName: NSUserNotificationDefaultSoundName))
-        }
+        .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
+        .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
+        .map(second(checkIfAddedNewProject))
+        .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+        .done(Current.notifcation.localPush)
         .catch { print("--------------------Error: \($0.localizedDescription)--------------------") }
 }
 

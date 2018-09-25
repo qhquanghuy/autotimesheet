@@ -9,10 +9,35 @@
 import Cocoa
 
 final class ProjectVC: NSViewController {
+    
+
+    private var projects: [Project] = [] {
+        didSet {
+            print(self.projects)
+            
+        }
+    }
+    
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
+        
+        _ = logInThenSaveCookie()
+            .then {
+                Current.service.getProjectStatusAt(date: Current.date()) }
+            .map { $0.items }
+            .map { (responsedProjects: Set<Project>) -> (Set<Project>) in
+                let savedProjects: Set<Project>? = try? Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
+                guard let _saved = savedProjects else { return responsedProjects }
+                return rebind(responsedProjects: responsedProjects, savedProjects: _saved)
+                
+            }
+            .done {
+                self.projects = $0.map(identity) }
+        
+        
     }
     
 }

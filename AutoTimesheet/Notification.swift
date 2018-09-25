@@ -25,12 +25,16 @@ protocol NotifcationDetailType {
 }
 
 
-struct NotifcationDetail: NotifcationDetailType {
+struct NotificationDetail: NotifcationDetailType {
     
-    let title: String
+    let title: String = Current.appName
     let subtitle: String
     let infomativeText: String
-    let soundName: String
+    let soundName: String = NSUserNotificationDefaultSoundName
+}
+
+extension NotificationDetail: Equatable {
+    
 }
 
 

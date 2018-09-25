@@ -36,3 +36,14 @@ func optionalThrows<A> (_ x: A?, throw: Error = NilError.gotNil) throws -> A {
 }
 
 
+func first<A, B, C>(_ f: @escaping (A) -> C) -> ((A, B)) -> (C, B) {
+    return { pair in
+        (f(pair.0), pair.1)
+    }
+}
+
+func second<A, B, C>(_ f: @escaping (B) -> C) -> ((A, B)) -> (A, C) {
+    return { pair in
+        (pair.0, f(pair.1))
+    }
+}

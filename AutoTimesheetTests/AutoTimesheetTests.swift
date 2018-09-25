@@ -13,6 +13,7 @@ class AutoTimesheetTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        Current = .mock
     }
 
     override func tearDown() {
@@ -20,8 +21,65 @@ class AutoTimesheetTests: XCTestCase {
     }
     
     
+    func testTimerLogTimesheet() {
+        let expectation = XCTestExpectation(description: "Download apple.com home page")
+        let extected1 = NotificationDetail(subtitle: "", infomativeText: Current.errorMessage.alreadyLoggedTimesheet)
+        let _ = logInThenSaveCookie()
+            .then { Current.service.getProjectStatusAt(date: Current.date()) }
+            .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
+            .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
+            .map(second(checkIfAddedNewProject))
+            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+            .done {
+                XCTAssertEqual($0, extected1)
+                expectation.fulfill()
+        }
+        
+        
+        let expected2 = NotificationDetail(subtitle: "", infomativeText: Current.errorMessage.alreadyLoggedTimesheet)
+        
+        let newPr = Project.init(id: 100, name: "DonotKnow", wkTime: 8, oTime: 0, des: "", isOtApproved: false)
+        let response = ProjectResponse.init(items: Set([newPr] + ProjectResponse.mock.items))
+        logInThenSaveCookie()
+            .then { _ in Promise<ProjectResponse>.value(response) }
+            .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
+            .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
+            .map(second(checkIfAddedNewProject))
+            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+            .done {
+                XCTAssertEqual($0, expected2)
+                expectation.fulfill()
+        }
+        
+        
+        
+        let expected3 = NotificationDetail(subtitle: "", infomativeText: Current.errorMessage.addedNewProject)
+        
+        let newPr1 = Project.init(id: 101, name: "DonotKnow", wkTime: 0, oTime: 0, des: "", isOtApproved: false)
+        let response2 = ProjectResponse.init(items: Set([newPr1] + ProjectResponse.mock.items.filter { $0.id != 9 }))
+        
+        let key = KeyValueStorageKey.todayProjects
+        let sortProject: (Set<Project>) -> [Project] = { $0.map(identity).sorted { $0.id < $1.id } }
+        logInThenSaveCookie()
+            .then { _ in Promise<ProjectResponse>.value(response2) }
+            .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
+            .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
+            .map(second(checkIfAddedNewProject))
+            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+            .done {
+                let cached: Set<Project> = try! Current.keyValueStorage.loadThrows(key: key)
+                
+                XCTAssertEqual($0, expected3)
+                XCTAssertEqual(response2.items |> sortProject, cached |> sortProject)
+                expectation.fulfill()
+        }
+        
+        
+        
+    }
+    
+    
     func testAddNewProjectsIfNeeded() {
-        Current = .mock
         let key = KeyValueStorageKey.todayProjects
 
         let sortProject: (Set<Project>) -> [Project] = { $0.map(identity).sorted { $0.id < $1.id } }
