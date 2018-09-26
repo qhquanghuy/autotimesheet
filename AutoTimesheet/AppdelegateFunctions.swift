@@ -16,7 +16,7 @@ func rebind(responsedProjects: Set<Project>, savedProjects: Set<Project>) -> Set
         res[proj.id] = proj
     }
     for proj in savedProjects {
-        if _projects[proj.id] != nil && proj.wkTime != 0 {
+        if _projects[proj.id] != nil && (proj.wkTime != 0 || !proj.des.isEmpty) {
             _projects[proj.id]?.wkTime = proj.wkTime
             _projects[proj.id]?.des = proj.des
         }
@@ -50,13 +50,13 @@ func saveNewProjectsIfNeeded(projects: Set<Project>) throws -> Set<Project> {
 
 func loadProjectFromStorageToLogSheet() throws -> Set<Project> {
     let cachedProjects: Set<Project> = try Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
-    let logged = cachedProjects.filter { $0.wkTime != 0 }
+    let saved = cachedProjects.filter { $0.wkTime != 0 }
     
     // if user has no configuration for timesheet
     // then check if user has `Other` project
     // if user has `Other` proj just return the mock
     // otherwise return the first in the cache with default message
-    if logged.isEmpty {
+    if saved.isEmpty {
         
         if !cachedProjects.filter({ $0.id == 9 }).isEmpty {
             return Set([.mock])
@@ -65,7 +65,7 @@ func loadProjectFromStorageToLogSheet() throws -> Set<Project> {
             return Set([firstChoice])
         }
     } else {
-        return logged
+        return saved
     }
     
     
@@ -106,9 +106,9 @@ func formatLoggedMessage(projects: Set<Project>) -> String {
     return "\n" + projects.map { "\($0.name) - \($0.wkTime)h - \($0.des)" }.joined(separator: "\n")
 }
 
-func logTimesheet() -> Promise<NotificationDetail> {
+func configureMessageThenLogTimesheet(projectsProvider: () throws -> Set<Project>) -> Promise<NotificationDetail> {
     do {
-        let configuredProjects = try loadProjectFromStorageToLogSheet() |> configureLogTimesheetMessage
+        let configuredProjects = try projectsProvider() |> configureLogTimesheetMessage
         return Current.service
             .logTimesheet(for: configuredProjects, at: Current.date())
             .map { NotificationDetail(subtitle: $0.status.rawValue.uppercased(),
@@ -120,12 +120,17 @@ func logTimesheet() -> Promise<NotificationDetail> {
 
 
 func timerLogTimesheet() {
+    print("trigger at \(Current.date())")
     logInThenSaveCookie()
         .then { Current.service.getProjectStatusAt(date: Current.date()) }
         .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
         .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
         .map(second(checkIfAddedNewProject))
-        .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+        .then {
+            $0.0.map(Promise.value) ??
+            $0.1.map(Promise.value) ??
+            configureMessageThenLogTimesheet(projectsProvider: loadProjectFromStorageToLogSheet)
+        }
         .done(Current.notifcation.localPush)
         .catch { print("--------------------Error: \($0.localizedDescription)--------------------") }
 }

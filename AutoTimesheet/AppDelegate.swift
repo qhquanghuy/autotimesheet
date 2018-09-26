@@ -42,17 +42,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             LoginServiceKit.addLoginItems()
         } else {
         }
+        
+//        Current = .mock
 
         let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
                                              minute: Current.configuration.fireTime.minute!,
                                              second: Current.configuration.fireTime.second!,
                                              of: Current.date())!
+        
+        
+        
         let timer: Timer = Timer.init(fire: fireDate,
                                       interval: Current.configuration.fireInterval.timeInterval,
                                       repeats: true,
-                                      block: const(timerLogTimesheet()))
+                                      block: { _ in timerLogTimesheet() })
 
 
+        
         RunLoop.main.add(timer, forMode: .default)
         
     }
@@ -61,6 +67,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let storyboard = NSStoryboard.init(name: "Main", bundle: nil)
         let wc = storyboard.instantiateController(withIdentifier: "MainWC") as! NSWindowController
         NSApp.activate(ignoringOtherApps: true)
+        NSApp.setActivationPolicy(.regular)
         wc.showWindow(self)
     }
     

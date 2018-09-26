@@ -26,8 +26,8 @@ extension ProjectResponse {
     }
     static let mock = ProjectResponse(items: [
         .mock,
-        Project(id: 224, name: "Training DEV", wkTime: 0, oTime: 0, des: "", isOtApproved: false),
-        Project(id: 304, name: "Shopping App v1.2.3", wkTime: 0, oTime: 0, des: "", isOtApproved: false)
+        Project(id: 224, name: "Training DEV", wkTime: 0, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil),
+        Project(id: 304, name: "Shopping App v1.2.3", wkTime: 0, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil)
     ])
 }
 
@@ -40,6 +40,7 @@ public struct Project {
     var des: String
     let isOtApproved: Bool
     
+    var localGitRepo: URL? = nil
    
     enum CodingKeys: String, CodingKey {
         case id
@@ -48,6 +49,7 @@ public struct Project {
         case oTime
         case des
         case isOtApproved = "is_ot_approved"
+        case localGitRepo
     }
     
 }
@@ -75,6 +77,8 @@ extension Project: Codable {
         
         let int2bool = { $0 == 0 ? false : true }
         self.isOtApproved = try optionalThrows(_isOtApproved.bimap(left: { Int($0).map(int2bool) }, right: int2bool).value)
+        
+        self.localGitRepo = try values.decodeIfPresent(URL.self, forKey: .localGitRepo)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -85,6 +89,7 @@ extension Project: Codable {
         try container.encode(self.des, forKey: .des)
         try container.encode(self.id, forKey: .id)
         try container.encode(self.isOtApproved ? 1 : 0, forKey: .isOtApproved)
+        try container.encodeIfPresent(self.localGitRepo, forKey: .localGitRepo)
     }
     
 }
@@ -99,5 +104,6 @@ extension Project {
                               wkTime: Current.configuration.defaultWkTime,
                               oTime: 0,
                               des: Current.configuration.defaultWkDes,
-                              isOtApproved: false)
+                              isOtApproved: false,
+                              localGitRepo: URL.init(string: "/Users/macmini/Desktop/autotimesheet"))
 }

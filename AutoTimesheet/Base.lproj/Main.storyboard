@@ -686,7 +686,7 @@
             <objects>
                 <windowController storyboardIdentifier="MainWC" id="L2c-2L-3lz" sceneMemberID="viewController">
                     <window key="window" title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="bi1-rD-Wl4">
-                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="181" y="186" width="480" height="270"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1366" height="745"/>
@@ -707,44 +707,63 @@
             <objects>
                 <viewController storyboardIdentifier="MainVC" id="F5z-zR-HDY" customClass="ProjectVC" customModule="AutoTimesheet" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="4j6-tD-OmR">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1110" height="555"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXq-ty-RSO">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <scrollView wantsLayer="YES" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dXq-ty-RSO">
+                                <rect key="frame" x="0.0" y="48" width="1110" height="507"/>
                                 <clipView key="contentView" drawsBackground="NO" id="3e8-fG-n5s">
-                                    <rect key="frame" x="1" y="1" width="478" height="268"/>
+                                    <rect key="frame" x="1" y="1" width="1108" height="505"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <collectionView id="1pD-Kb-DwA">
-                                            <rect key="frame" x="0.0" y="0.0" width="478" height="158"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="1108" height="505"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
-                                            <collectionViewGridLayout key="collectionViewLayout" maximumNumberOfColumns="4" id="iMv-Og-DH6"/>
+                                            <collectionViewFlowLayout key="collectionViewLayout" minimumInteritemSpacing="10" minimumLineSpacing="10" id="o3L-E2-arp">
+                                                <size key="itemSize" width="50" height="50"/>
+                                            </collectionViewFlowLayout>
                                             <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            <connections>
+                                                <outlet property="dataSource" destination="F5z-zR-HDY" id="fEF-3m-mRc"/>
+                                                <outlet property="delegate" destination="F5z-zR-HDY" id="tPd-lR-qXY"/>
+                                            </connections>
                                         </collectionView>
                                     </subviews>
                                 </clipView>
                                 <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mQE-VF-6GW">
-                                    <rect key="frame" x="1" y="144" width="233" height="15"/>
+                                    <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="P3Z-KE-mTe">
+                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="P3Z-KE-mTe">
                                     <rect key="frame" x="234" y="1" width="15" height="143"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="D4r-hv-tga">
+                                <rect key="frame" x="1021" y="5" width="63" height="32"/>
+                                <buttonCell key="cell" type="push" title="Log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="eJo-fc-hqf">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system"/>
+                                </buttonCell>
+                            </button>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="trailing" secondItem="D4r-hv-tga" secondAttribute="trailing" constant="32" id="BYw-3S-5eG"/>
+                            <constraint firstAttribute="bottom" secondItem="D4r-hv-tga" secondAttribute="bottom" constant="12" id="EE1-mt-qHp"/>
                             <constraint firstItem="dXq-ty-RSO" firstAttribute="leading" secondItem="4j6-tD-OmR" secondAttribute="leading" id="RCq-Z2-g04"/>
                             <constraint firstAttribute="trailing" secondItem="dXq-ty-RSO" secondAttribute="trailing" id="aEB-2I-uh3"/>
-                            <constraint firstAttribute="bottom" secondItem="dXq-ty-RSO" secondAttribute="bottom" id="fZM-o2-4eo"/>
+                            <constraint firstAttribute="bottom" secondItem="dXq-ty-RSO" secondAttribute="bottom" constant="48" id="fZM-o2-4eo"/>
                             <constraint firstItem="dXq-ty-RSO" firstAttribute="top" secondItem="4j6-tD-OmR" secondAttribute="top" id="x5y-Sy-uQD"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="btnLognSave" destination="eJo-fc-hqf" id="PrF-Xf-lUa"/>
+                        <outlet property="collectionView" destination="1pD-Kb-DwA" id="6aW-cV-D99"/>
+                    </connections>
                 </viewController>
                 <customObject id="UIa-5s-YVO" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="791" y="230"/>
+            <point key="canvasLocation" x="1106" y="372.5"/>
         </scene>
     </scenes>
 </document>
