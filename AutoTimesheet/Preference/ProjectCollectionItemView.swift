@@ -12,7 +12,7 @@ class ProjectCollectionItemView: NSView {
     
     static let identifier = NSUserInterfaceItemIdentifier(rawValue: "CollectionViewHeader")
     
-    var project: (Project, Int)?
+    var project: Project?
 
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -21,32 +21,14 @@ class ProjectCollectionItemView: NSView {
     }
     
     
-    private let lblProjectName: NSTextField = {
-        let lbl = NSTextField()
-        lbl.isEditable = false
-        lbl.isBordered = false
-        return lbl
-    }()
+    private let lblProjectName = TextFiledWithTitle()
     
-    private let lblDes: NSTextField = {
-        let lbl = NSTextField()
-        lbl.isEditable = true
-        return lbl
-    }()
+    private let lblDes = TextFiledWithTitle()
+    
+    private let lblHours = TextFiledWithTitle()
     
     
-    private let lblHours: NSTextField = {
-        let lbl = NSTextField()
-        lbl.isEditable = true
-        return lbl
-    }()
-    
-    
-    private let lblLocalGit: NSTextField = {
-        let lbl = NSTextField()
-        lbl.isEditable = true
-        return lbl
-    }()
+    private let lblLocalGit = TextFiledWithTitle()
     
     
     
@@ -84,10 +66,10 @@ class ProjectCollectionItemView: NSView {
         self.lblHours.widthAnchor.constraint(equalToConstant: 80).isActive = true
         self.lblLocalGit.widthAnchor.constraint(equalToConstant: 320).isActive = true
         
-        self.lblProjectName.preferredMaxLayoutWidth = 0
-        self.lblDes.preferredMaxLayoutWidth = 0
-        self.lblHours.preferredMaxLayoutWidth = 0
-        self.lblLocalGit.preferredMaxLayoutWidth = 0
+//        self.lblProjectName.preferredMaxLayoutWidth = 0
+//        self.lblDes.preferredMaxLayoutWidth = 0
+//        self.lblHours.preferredMaxLayoutWidth = 0
+//        self.lblLocalGit.preferredMaxLayoutWidth = 0
         
         
         self.lblProjectName.delegate = self
@@ -105,8 +87,9 @@ class ProjectCollectionItemView: NSView {
     
     
     
-    func bind(project: Project, index: Int) {
-        self.project = (project, index)
+    func bind(project: Project) {
+       
+        self.project = project
         
         self.lblProjectName.stringValue = project.name
         self.lblDes.stringValue = project.des
@@ -117,9 +100,10 @@ class ProjectCollectionItemView: NSView {
     
     func headerStyle() {
         
-        self.lblDes |> labelStyle
-        self.lblHours |> labelStyle
-        self.lblLocalGit |> labelStyle
+        self.lblProjectName.textField |> labelStyle
+        self.lblDes.textField |> labelStyle
+        self.lblHours.textField |> labelStyle
+        self.lblLocalGit.textField |> labelStyle
         
         
         self.lblProjectName.stringValue = "Project name"
@@ -144,18 +128,33 @@ extension ProjectCollectionItemView : NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         guard let textF = obj.object as? NSTextField else { return }
         
-        if textF == self.lblDes {
-            self.project?.0.des = textF.stringValue
-        } else if textF == self.lblHours {
-            self.project?.0.wkTime = Double(textF.stringValue)!
-        } else if textF == self.lblLocalGit {
+        if textF == self.lblDes.textField {
+            self.project?.des = textF.stringValue
+            
+        } else if textF == self.lblHours.textField {
+            
+            let characterSet = CharacterSet(charactersIn: "0123456789.").inverted
+            self.lblHours.stringValue = self.lblHours
+                                                .stringValue
+                                                .components(separatedBy: characterSet)
+                                                .joined(separator: "")
+            
+            if let doubleVal = Double(self.lblHours.stringValue) {
+                self.project?.wkTime = doubleVal
+            }
+            
+        } else if textF == self.lblLocalGit.textField {
+            
             if isGitDirectory(urlStr: textF.stringValue) {
-                self.project?.0.localGitRepo = textF.stringValue
+                self.project?.localGitRepo = textF.stringValue
                 _ = getLastestGitLog(validUrl: textF.stringValue).done(on: DispatchQueue.main) { [weak self] log in
                     self?.lblDes.stringValue = log.subject
+                    self?.project?.des = log.subject
+                    self?.lblLocalGit.title = ""
                 }
             } else {
-                self.lblLocalGit.stringValue = "Invalid URL"
+                self.lblLocalGit.title = "INVALID URL"
+                self.project?.localGitRepo = nil
             }
         } else {
             

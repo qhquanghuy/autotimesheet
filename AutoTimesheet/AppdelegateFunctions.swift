@@ -19,6 +19,7 @@ func rebind(responsedProjects: Set<Project>, savedProjects: Set<Project>) -> Set
         if _projects[proj.id] != nil && (proj.wkTime != 0 || !proj.des.isEmpty) {
             _projects[proj.id]?.wkTime = proj.wkTime
             _projects[proj.id]?.des = proj.des
+            _projects[proj.id]?.localGitRepo = proj.localGitRepo
         }
     }
     return Set(_projects.values)
@@ -62,9 +63,9 @@ func loadProjectFromStorageToLogSheet() throws -> Set<Project> {
 func configureLogTimesheetMessage(projects: Set<Project>) -> Promise<Set<Project>> {
     
     
-    let projectsThatHasLocalGit = projects.filter { $0.des.isEmpty }.map(identity)
+    let projectsThatHasLocalGit = projects.filter { $0.wkTime != 0 && $0.localGitRepo != nil }.map(identity)
     let projectsThatHasDes = projects.symmetricDifference(projectsThatHasLocalGit)
-    let gitlogPromises = projectsThatHasLocalGit.map { getLastestGitLog(validUrl: $0.localGitRepo!) }
+    let gitlogPromises = projectsThatHasLocalGit.compactMap { $0.localGitRepo.map(getLastestGitLog) }
     return when(fulfilled: gitlogPromises)
         .map { zip($0, projectsThatHasLocalGit) }
         .map { zipped in zipped.map { set(\.des, val: $0.0.subject)($0.1) } }
@@ -105,7 +106,7 @@ func configureMessageThenLogTimesheet(projectsProvider: () throws -> Set<Project
         return configureLogTimesheetMessage(projects: try projectsProvider())
                 .then { projects in
                 Current.service
-                    .logTimesheet(for: projects, at: Current.date())
+                    .logTimesheet(for: projects, at: Current.utcDate())
                     .map { NotificationDetail(subtitle: $0.status.rawValue.uppercased(),
                                               infomativeText: $0.message + (projects |> formatLoggedMessage))  }
             }
@@ -117,9 +118,16 @@ func configureMessageThenLogTimesheet(projectsProvider: () throws -> Set<Project
 
 
 func timerLogTimesheet() {
-    print("trigger at \(Current.date())")
+    let date = Current.utcDate()
+    print("trigger at \(date)")
+    
+    
+    if Current.calendar.isDateInWeekend(date) {
+        return
+    }
+    
     logInThenSaveCookie()
-        .then { Current.service.getProjectStatusAt(date: Current.date()) }
+        .then { Current.service.getProjectStatusAt(date: Current.utcDate()) }
         .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
         .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
         .map(second(checkIfAddedNewProject))

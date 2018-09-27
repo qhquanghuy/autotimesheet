@@ -7,8 +7,8 @@
 //
 
 import Foundation
-func const<A, B>(_ x: A) -> (B) -> A {
-    return { _ in x }
+func const<A, B>(_ x: @escaping @autoclosure () -> A) -> (B) -> A {
+    return { _ in x() }
 }
 
 func flip<A, B, C> (_ f: @escaping (A) -> (B) -> C) -> (B) -> (A) -> C {

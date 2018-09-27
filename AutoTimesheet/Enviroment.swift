@@ -23,7 +23,7 @@ struct AutoTimesheetErrorMessage {
 
 struct Enviroment {
     var service: ServiceType = TimesheetService()
-    var date = { Date() }
+    var utcDate = { Date() }
     var calendar = Calendar.autoupdatingCurrent
     var configuration = Configuration()
     var notifcation: NotificationCenterType = NotificationCenter()
@@ -43,7 +43,7 @@ struct Enviroment {
 
 extension Enviroment {
     static let mock = Enviroment(service: MockService(),
-                                 date: { Date() },
+                                 utcDate: { Date() },
                                  calendar: Calendar.current,
                                  configuration: .mock,
                                  notifcation: MockNotificationCenter(),

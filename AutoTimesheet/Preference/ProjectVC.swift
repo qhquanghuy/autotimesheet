@@ -22,7 +22,7 @@ final class ProjectVC: NSViewController {
         // Do view setup here.
         self.configureLayout()
         _ = logInThenSaveCookie()
-            .then { Current.service.getProjectStatusAt(date: Current.date()) }
+            .then { Current.service.getProjectStatusAt(date: Current.utcDate()) }
             .map { $0.items }
             .map { (responsedProjects: Set<Project>) -> (Set<Project>) in
                 let savedProjects: Set<Project>? = try? Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
@@ -30,14 +30,15 @@ final class ProjectVC: NSViewController {
                 return rebind(responsedProjects: responsedProjects, savedProjects: _saved)
                 
             }
-            .done { self.projects = $0.map(identity) }
+            .then(configureLogTimesheetMessage)
+            .done { self.projects = $0.map(identity).sorted { $0.id < $1.id } }
             .done { self.collectionView.reloadData() }
         
         
     }
     private func configureLayout() {
         let layout = self.collectionView.collectionViewLayout as! NSCollectionViewFlowLayout
-        let size = CGSize(width: self.collectionView.frame.size.width, height: 40)
+        let size = CGSize(width: self.collectionView.frame.size.width, height: 48)
         
         layout.itemSize = size
         layout.headerReferenceSize = size
@@ -54,29 +55,69 @@ final class ProjectVC: NSViewController {
     }
     
     
+    
+    
     @objc func onClickBtnLognSave() {
-        self.updateAndSaveProjects()
-        let projs = Set(self.projects).filter { $0.wkTime != 0 }
-        _ = logInThenSaveCookie()
-            .then { _ in AutoTimesheet.configureMessageThenLogTimesheet(projectsProvider: { projs }) }
-            .done(Current.notifcation.localPush)
-            .done { NSApp.setActivationPolicy(.accessory) }
-            .catch { print("--------------------Error: \($0.localizedDescription)--------------------") }
+        
+        _ = self.updateAndSaveProjects()
+            .bimap(left: showAlert, right: { $0.filter { $0.wkTime != 0 } })
+            .map { projs in
+                logInThenSaveCookie()
+                    .then { _ in Current.service.logTimesheet(for: projs, at: Current.utcDate()) }
+                    .map {
+                        NotificationDetail(subtitle: $0.status.rawValue.uppercased(),
+                                              infomativeText: $0.message + (projs |> formatLoggedMessage)) }
+                    .done(Current.notifcation.localPush)
+                    .done { NSApp.setActivationPolicy(.accessory) }
+                    .catch { print("--------------------Error: \($0.localizedDescription)--------------------") }
+        }
         
         
     }
     
+    
+    /// get projects that filled working time
+    ///
+    /// - Parameter projects: [Project]
+    /// - Returns: message if all is not filled or all filled projects
+    func validateIfFilledWkTime(projects: [Project]) -> Either<String, [Project]> {
+        let filledWkProjects = projects.filter { $0.wkTime != 0 }
+        return filledWkProjects.isEmpty ? .left("Working time's must not empty") : .right(projects)
+    }
+    
+    func validateWkTimeInRange(projects: [Project]) -> Either<String, [Project]> {
+        let totalWk = projects.reduce(0) { $0 + $1.wkTime }
+        return !(0...8.5).contains(totalWk) ?
+            .left("Total Working time's must not higher than 8 or lower than 0") :
+            .right(projects)
+    }
+    
+    func validateEitherDesOrLocalGitRepoFilled(projects: [Project]) -> Either<String, [Project]> {
+        return !projects.filter { $0.des.isEmpty && $0.localGitRepo == nil && $0.wkTime != 0 }.isEmpty ?
+            .left("One of Des and Local git Repo is must not empty") :
+            .right(projects)
+    }
+    
     ///TODO: implement validate total working times <= 8
-    private func updateAndSaveProjects() {
-        for idx in 0..<self.projects.count {
-            self.collectionView.item(at: IndexPath(item: idx, section: 0))
-                .flatMap { $0 as? ProjectCollectionViewItem }
-                .flatMap { $0.mainView.project }
-                .map { self.projects[$0.1] = $0.0 }
+    private func updateAndSaveProjects() -> Either<String, Set<Project>>{
+        let projectsFromItems = (0..<self.projects.count)
+                                        .map { IndexPath(item: $0, section: 0) }
+                                        .compactMap(self.collectionView.item)
+                                        .compactMap { $0 as? ProjectCollectionViewItem }
+                                        .compactMap { $0.mainView.project }
+        
+        let validated = projectsFromItems |>
+                            validateIfFilledWkTime
+                        >=> validateWkTimeInRange
+                        >=> validateEitherDesOrLocalGitRepoFilled
+        
+        return validated
+            .map(Set.init)
+            .flatMap {
+                Current.keyValueStorage
+                    .save($0, forKey: KeyValueStorageKey.todayProjects)
+                    .bimap(left: { $0.localizedDescription }, right: const($0))
         }
-        _ = Current.keyValueStorage
-            .save(Set(self.projects), forKey: KeyValueStorageKey.todayProjects)
-            .bimap(left: { print("----------Error: \($0.localizedDescription)--------------") }, right: identity)
     }
     
     
@@ -91,7 +132,7 @@ extension ProjectVC: NSCollectionViewDataSource {
         
         
         let idx = indexPath[1]
-        item.mainView.bind(project: self.projects[idx], index: idx)
+        item.mainView.bind(project: self.projects[idx])
         return item
     }
     
@@ -118,15 +159,24 @@ extension ProjectVC: NSCollectionViewDataSource {
 
 extension ProjectVC: NSCollectionViewDelegateFlowLayout {
 }
+
 extension ProjectVC: NSWindowDelegate {
     func windowShouldClose(_ sender: NSWindow) -> Bool {
-        return true
+        return self.updateAndSaveProjects()
+            .bimap(left: { str -> Bool in
+                showAlert(message: str)
+                return false
+            }, right: const(true)).value
     }
     
     func windowWillClose(_ notification: Notification) {
         NSApp.setActivationPolicy(.accessory)
-        self.updateAndSaveProjects()
+
     }
     
     
+}
+func showAlert(message: String) {
+    let detail = NotificationDetail.init(subtitle: "", infomativeText: message)
+    _ = Current.notifcation.windowAlert(notification: detail)
 }

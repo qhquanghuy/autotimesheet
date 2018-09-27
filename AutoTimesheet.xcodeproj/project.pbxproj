@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00372009215CCA73007F22C9 /* TextFiledWithTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00372008215CCA73007F22C9 /* TextFiledWithTitle.swift */; };
 		0067990E21564BB1005E1E8C /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067990D21564BB1005E1E8C /* Services.swift */; };
 		0067991221564E86005E1E8C /* MockServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067991121564E86005E1E8C /* MockServices.swift */; };
 		0067991421565247005E1E8C /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067991321565247005E1E8C /* Project.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00372008215CCA73007F22C9 /* TextFiledWithTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFiledWithTitle.swift; sourceTree = "<group>"; };
 		004DF50021573EB000640B8E /* UserNotifications.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UserNotifications.framework; path = System/Library/Frameworks/UserNotifications.framework; sourceTree = SDKROOT; };
 		0067990D21564BB1005E1E8C /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
 		0067991121564E86005E1E8C /* MockServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockServices.swift; sourceTree = "<group>"; };
@@ -135,6 +137,7 @@
 				008EC0142157826100A10E7C /* ProjectVC.swift */,
 				0093A610215B6CF000EC1CF3 /* ProjectCollectionViewItem.swift */,
 				0093A619215B768500EC1CF3 /* ProjectCollectionItemView.swift */,
+				00372008215CCA73007F22C9 /* TextFiledWithTitle.swift */,
 			);
 			path = Preference;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 			files = (
 				00C21C9C215520F200449FCC /* Curry.swift in Sources */,
 				0067992E2156B4E6005E1E8C /* Enviroment.swift in Sources */,
+				00372009215CCA73007F22C9 /* TextFiledWithTitle.swift in Sources */,
 				00C21CA12155236700449FCC /* Operators.swift in Sources */,
 				0067991221564E86005E1E8C /* MockServices.swift in Sources */,
 				006E525421593F880089587F /* MockKeyValueStorage.swift in Sources */,

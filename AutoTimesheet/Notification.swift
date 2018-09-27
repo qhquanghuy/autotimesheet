@@ -7,11 +7,12 @@
 //
 
 import Foundation
-
+import Cocoa
 
 
 protocol NotificationCenterType {
     func localPush(notification: NotifcationDetailType)
+    func windowAlert(notification: NotifcationDetailType) -> Bool
 }
 
 protocol NotifcationDetailType {
@@ -21,9 +22,13 @@ protocol NotifcationDetailType {
     
     var infomativeText: String { get }
     
-    
 }
 
+final class NotificationDelegateImpl: NSObject, NSUserNotificationCenterDelegate {
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+        return true
+    }
+}
 
 struct NotificationDetail: NotifcationDetailType {
     
@@ -31,6 +36,7 @@ struct NotificationDetail: NotifcationDetailType {
     let subtitle: String
     let infomativeText: String
     let soundName: String = NSUserNotificationDefaultSoundName
+
 }
 
 extension NotificationDetail: Equatable {
@@ -39,15 +45,27 @@ extension NotificationDetail: Equatable {
 
 
 struct NotificationCenter: NotificationCenterType {
+    func windowAlert(notification: NotifcationDetailType) -> Bool {
+        let alert = NSAlert()
+        alert.messageText = notification.title
+        alert.informativeText = notification.infomativeText
+        alert.alertStyle = .warning
+        alert.addButton(withTitle: "OK")
+        return alert.runModal() == .alertFirstButtonReturn
+    }
+    
+    
+    private let delegateImpl = NotificationDelegateImpl()
+    
     func localPush(notification: NotifcationDetailType) {
-        
-        
         
         let userNotificaton = NSUserNotification()
         userNotificaton.soundName = notification.soundName
         userNotificaton.title = notification.title
         userNotificaton.subtitle = notification.subtitle
         userNotificaton.informativeText = notification.infomativeText
+        
+        NSUserNotificationCenter.default.delegate = self.delegateImpl
         NSUserNotificationCenter.default.deliver(userNotificaton)
     }
     
@@ -55,6 +73,11 @@ struct NotificationCenter: NotificationCenterType {
 }
 
 struct MockNotificationCenter: NotificationCenterType {
+    func windowAlert(notification: NotifcationDetailType) -> Bool {
+        dump(notification)
+        return false
+    }
+    
     func localPush(notification: NotifcationDetailType) {
         print(notification)
     }

@@ -10,6 +10,11 @@ import Foundation
 
 precedencegroup ForwardCompositon {
     associativity: left
+    higherThan: ForwardFishCompositon
+}
+
+precedencegroup ForwardFishCompositon {
+    associativity: left
     higherThan: ForwardApplication
 }
 
@@ -18,8 +23,12 @@ precedencegroup ForwardApplication {
     higherThan: AssignmentPrecedence
 }
 
+
+
 infix operator >>>: ForwardCompositon
 infix operator |>: ForwardApplication
+infix operator >=>: ForwardFishCompositon
+
 
 
 func >>> <A, B, C> (_ f: @escaping (A) -> B, _ g: @escaping (B) -> C) -> (A) -> C {

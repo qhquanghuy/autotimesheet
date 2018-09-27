@@ -46,7 +46,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         }
         
-        Current = .mock
+//        Current = .mock
+        
+
+
 
         let saved: Either<Error, Set<Project>> = Current.keyValueStorage
                                                         .load(key: KeyValueStorageKey.todayProjects)
@@ -58,7 +61,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let fireDate = Current.calendar.date(bySettingHour: Current.configuration.fireTime.hour!,
                                              minute: Current.configuration.fireTime.minute!,
                                              second: Current.configuration.fireTime.second!,
-                                             of: Current.date())!
+                                             of: Current.utcDate())!
 
 
 

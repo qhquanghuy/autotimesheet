@@ -106,3 +106,8 @@ extension Either: Codable where L: Codable, R: Codable {
 }
 
 
+func >=> <A, B, C, D>(_ f: @escaping (A) -> Either<B, C>, _ g: @escaping (C) -> Either<B, D>) -> (A) -> Either<B, D> {
+    return { a in
+        f(a).flatMap(g)
+    }
+}

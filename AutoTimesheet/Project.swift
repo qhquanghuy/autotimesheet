@@ -28,6 +28,7 @@ extension ProjectResponse {
         .mock,
         Project(id: 224, name: "Training DEV", wkTime: 0, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil),
         Project(id: 304, name: "Shopping App v1.2.3", wkTime: 0, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil)
+        
     ])
 }
 
@@ -101,9 +102,9 @@ extension Project: Hashable {
 extension Project {
     static let mock = Project(id: 9,
                               name: "Other",
-                              wkTime: Current.configuration.defaultWkTime,
+                              wkTime: 0,
                               oTime: 0,
-                              des: Current.configuration.defaultWkDes,
+                              des: "",
                               isOtApproved: false,
                               localGitRepo: nil)
 }

@@ -50,7 +50,7 @@ func bash(command: String, arguments: [String]) -> String {
 
 func getLastestGitLog(validUrl: String) -> Promise<GitLog> {
     let author = Current.credential.email
-    let date = Current.date()
+    let date = Current.utcDate()
     let beforeDateStr = Current.dateFormater.string(from: date)
     let afterDateStr = Current.dateFormater.string(from: date - 1.days.timeInterval)
     
@@ -59,7 +59,7 @@ func getLastestGitLog(validUrl: String) -> Promise<GitLog> {
             let logStr = bash(command: "git", arguments: ["-C", validUrl,
                                                           "log", GitLog.jsonFormat,
                                                           "--after", "\(afterDateStr) 00:00",
-                "--before", "\(beforeDateStr) 00:00"])
+                                                        "--before", "\(beforeDateStr) 00:00"])
             let arrLog = "[\(logStr)]"
             print(arrLog)
             resolver.fulfill(arrLog)
