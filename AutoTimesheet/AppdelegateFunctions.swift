@@ -33,49 +33,43 @@ func rebind(responsedProjects: Set<Project>, savedProjects: Set<Project>) -> Set
 /// - Returns: new project added to local storage
 /// - Throws: re-throw exception from localStorage
 func saveNewProjectsIfNeeded(projects: Set<Project>) throws -> Set<Project> {
-    var _projects = projects
-    let newProjects: Set<Project>
-    let savedProjects: Set<Project>? = try? Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
+    var newProjects: Set<Project> = projects
+    let key = KeyValueStorageKey.todayProjects
     
-    if let savedProjects = savedProjects {
-        _projects = rebind(responsedProjects: _projects, savedProjects: savedProjects)
+    if let savedProjects: Set<Project> = try? Current.keyValueStorage.loadThrows(key: key) {
         
+        let _projects = rebind(responsedProjects: projects, savedProjects: savedProjects)
+        
+        try Current.keyValueStorage.saveThrows(Set(_projects), forKey: KeyValueStorageKey.todayProjects)
+        
+        newProjects = projects.filter({proj in !savedProjects.contains { $0.id == proj.id }})
     }
     
-    newProjects = savedProjects.map { saved in projects.filter({proj in !saved.contains { $0.id == proj.id }}) } ?? projects
     
-    try Current.keyValueStorage.saveThrows(Set(_projects), forKey: KeyValueStorageKey.todayProjects)
     return newProjects
 }
 
 func loadProjectFromStorageToLogSheet() throws -> Set<Project> {
     let cachedProjects: Set<Project> = try Current.keyValueStorage.loadThrows(key: KeyValueStorageKey.todayProjects)
-    let saved = cachedProjects.filter { $0.wkTime != 0 }
-    
-    // if user has no configuration for timesheet
-    // then check if user has `Other` project
-    // if user has `Other` proj just return the mock
-    // otherwise return the first in the cache with default message
-    if saved.isEmpty {
-        
-        if !cachedProjects.filter({ $0.id == 9 }).isEmpty {
-            return Set([.mock])
-        } else {
-            let firstChoice = cachedProjects.first!
-            return Set([firstChoice])
-        }
-    } else {
-        return saved
-    }
-    
+    return cachedProjects.filter { $0.wkTime != 0 }
     
 }
 
 
+
 ///TODO: implement parse git commit to get the message
 
-func configureLogTimesheetMessage(projects: Set<Project>) -> Set<Project> {
-    return projects
+func configureLogTimesheetMessage(projects: Set<Project>) -> Promise<Set<Project>> {
+    
+    
+    let projectsThatHasLocalGit = projects.filter { $0.des.isEmpty }.map(identity)
+    let projectsThatHasDes = projects.symmetricDifference(projectsThatHasLocalGit)
+    let gitlogPromises = projectsThatHasLocalGit.map { getLastestGitLog(validUrl: $0.localGitRepo!) }
+    return when(fulfilled: gitlogPromises)
+        .map { zip($0, projectsThatHasLocalGit) }
+        .map { zipped in zipped.map { set(\.des, val: $0.0.subject)($0.1) } }
+        .map(Set.init)
+        .map { $0.union(projectsThatHasDes) }
 }
 
 func logInThenSaveCookie() -> Promise<()> {
@@ -108,11 +102,14 @@ func formatLoggedMessage(projects: Set<Project>) -> String {
 
 func configureMessageThenLogTimesheet(projectsProvider: () throws -> Set<Project>) -> Promise<NotificationDetail> {
     do {
-        let configuredProjects = try projectsProvider() |> configureLogTimesheetMessage
-        return Current.service
-            .logTimesheet(for: configuredProjects, at: Current.date())
-            .map { NotificationDetail(subtitle: $0.status.rawValue.uppercased(),
-                                      infomativeText: $0.message + (configuredProjects |> formatLoggedMessage))  }
+        return configureLogTimesheetMessage(projects: try projectsProvider())
+                .then { projects in
+                Current.service
+                    .logTimesheet(for: projects, at: Current.date())
+                    .map { NotificationDetail(subtitle: $0.status.rawValue.uppercased(),
+                                              infomativeText: $0.message + (projects |> formatLoggedMessage))  }
+            }
+        
     } catch let err {
         return .init(error: err)
     }

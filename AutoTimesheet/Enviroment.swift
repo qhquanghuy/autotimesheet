@@ -18,6 +18,7 @@ struct KeyValueStorageKey {
 struct AutoTimesheetErrorMessage {
     let alreadyLoggedTimesheet = "You've already logged timesheet for today"
     let addedNewProject = "You've added new project, auto timesheet for today will suspend, please configure auto time sheet then submit it manually!"
+    let unprovideCredentials = "Please provide your credentials"
 }
 
 struct Enviroment {
@@ -28,7 +29,12 @@ struct Enviroment {
     var notifcation: NotificationCenterType = NotificationCenter()
     var keyValueStorage: KeyValueStorage = UserDefaults.standard
     
-    
+    let fileManager = FileManager.default
+    let dateFormater: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        return formatter
+    }()
     let errorMessage = AutoTimesheetErrorMessage()
     let credential = Credential()
     

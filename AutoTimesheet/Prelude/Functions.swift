@@ -47,3 +47,11 @@ func second<A, B, C>(_ f: @escaping (B) -> C) -> ((A, B)) -> (A, C) {
         (pair.0, f(pair.1))
     }
 }
+
+func set<W, P>(_ keyPath: WritableKeyPath<W, P>, val: P) -> (W) -> W {
+    return {
+        var x = $0
+        x[keyPath: keyPath] = val
+        return x
+    }
+}

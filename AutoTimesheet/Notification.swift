@@ -40,6 +40,9 @@ extension NotificationDetail: Equatable {
 
 struct NotificationCenter: NotificationCenterType {
     func localPush(notification: NotifcationDetailType) {
+        
+        
+        
         let userNotificaton = NSUserNotification()
         userNotificaton.soundName = notification.soundName
         userNotificaton.title = notification.title

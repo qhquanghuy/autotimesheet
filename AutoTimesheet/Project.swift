@@ -40,7 +40,7 @@ public struct Project {
     var des: String
     let isOtApproved: Bool
     
-    var localGitRepo: URL? = nil
+    var localGitRepo: String? = nil
    
     enum CodingKeys: String, CodingKey {
         case id
@@ -78,7 +78,7 @@ extension Project: Codable {
         let int2bool = { $0 == 0 ? false : true }
         self.isOtApproved = try optionalThrows(_isOtApproved.bimap(left: { Int($0).map(int2bool) }, right: int2bool).value)
         
-        self.localGitRepo = try values.decodeIfPresent(URL.self, forKey: .localGitRepo)
+        self.localGitRepo = try values.decodeIfPresent(String.self, forKey: .localGitRepo)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -105,5 +105,5 @@ extension Project {
                               oTime: 0,
                               des: Current.configuration.defaultWkDes,
                               isOtApproved: false,
-                              localGitRepo: URL.init(string: "/Users/macmini/Desktop/autotimesheet"))
+                              localGitRepo: nil)
 }

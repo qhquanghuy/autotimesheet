@@ -29,7 +29,7 @@ class AutoTimesheetTests: XCTestCase {
             .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
             .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
             .map(second(checkIfAddedNewProject))
-            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? configureMessageThenLogTimesheet(projectsProvider: loadProjectFromStorageToLogSheet) }
             .done {
                 XCTAssertEqual($0, extected1)
                 expectation.fulfill()
@@ -38,14 +38,14 @@ class AutoTimesheetTests: XCTestCase {
         
         let expected2 = NotificationDetail(subtitle: "", infomativeText: Current.errorMessage.alreadyLoggedTimesheet)
         
-        let newPr = Project.init(id: 100, name: "DonotKnow", wkTime: 8, oTime: 0, des: "", isOtApproved: false)
+        let newPr = Project.init(id: 100, name: "DonotKnow", wkTime: 8, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil)
         let response = ProjectResponse.init(items: Set([newPr] + ProjectResponse.mock.items))
         logInThenSaveCookie()
             .then { _ in Promise<ProjectResponse>.value(response) }
             .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
             .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
             .map(second(checkIfAddedNewProject))
-            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? configureMessageThenLogTimesheet(projectsProvider: loadProjectFromStorageToLogSheet) }
             .done {
                 XCTAssertEqual($0, expected2)
                 expectation.fulfill()
@@ -55,7 +55,7 @@ class AutoTimesheetTests: XCTestCase {
         
         let expected3 = NotificationDetail(subtitle: "", infomativeText: Current.errorMessage.addedNewProject)
         
-        let newPr1 = Project.init(id: 101, name: "DonotKnow", wkTime: 0, oTime: 0, des: "", isOtApproved: false)
+        let newPr1 = Project.init(id: 101, name: "DonotKnow", wkTime: 0, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil)
         let response2 = ProjectResponse.init(items: Set([newPr1] + ProjectResponse.mock.items.filter { $0.id != 9 }))
         
         let key = KeyValueStorageKey.todayProjects
@@ -65,7 +65,7 @@ class AutoTimesheetTests: XCTestCase {
             .map { checkIfAlreadyLoggedTimesheet(projects: $0.items) }
             .map { ($0.0, try saveNewProjectsIfNeeded(projects: $0.1)) }
             .map(second(checkIfAddedNewProject))
-            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? logTimesheet() }
+            .then { $0.0.map(Promise.value) ?? $0.1.map(Promise.value) ?? configureMessageThenLogTimesheet(projectsProvider: loadProjectFromStorageToLogSheet) }
             .done {
                 let cached: Set<Project> = try! Current.keyValueStorage.loadThrows(key: key)
                 
@@ -101,8 +101,8 @@ class AutoTimesheetTests: XCTestCase {
         let newSaved = try! saveNewProjectsIfNeeded(projects: Set(incomingProj))
         
         XCTAssertTrue(newSaved.isEmpty)
-        let newPr = Project.init(id: 100, name: "DonotKnow", wkTime: 8, oTime: 0, des: "", isOtApproved: false)
-        let newPr2 = Project.init(id: 101, name: "DonotKnowwhatisthis", wkTime: 0, oTime: 0, des: "", isOtApproved: false)
+        let newPr = Project.init(id: 100, name: "DonotKnow", wkTime: 8, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil)
+        let newPr2 = Project.init(id: 101, name: "DonotKnowwhatisthis", wkTime: 0, oTime: 0, des: "", isOtApproved: false, localGitRepo: nil)
         incomingProj.append(newPr)
         incomingProj.append(newPr2)
         let newSaved2 = try! saveNewProjectsIfNeeded(projects: Set(incomingProj))
@@ -112,7 +112,7 @@ class AutoTimesheetTests: XCTestCase {
         
         do {
             let projToLog = try loadProjectFromStorageToLogSheet()
-            XCTAssertEqual(projToLog |> sortProject, [.init(id: 9, name: "Other", wkTime: 4.5, oTime: 0, des: "Reading articles", isOtApproved: false), newPr])
+            XCTAssertEqual(projToLog |> sortProject, [.init(id: 9, name: "Other", wkTime: 4.5, oTime: 0, des: "Reading articles", isOtApproved: false, localGitRepo: nil), newPr])
         } catch let err {
             print(err)
         }

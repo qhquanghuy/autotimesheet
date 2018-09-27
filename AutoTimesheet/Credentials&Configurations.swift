@@ -9,7 +9,7 @@
 import Foundation
 
 
-struct Credential {
+struct Credential: Hashable {
     let email: String = "quanghuy.nguyen@savvycomsoftware.com"
     let password: String = "123456789"
 }

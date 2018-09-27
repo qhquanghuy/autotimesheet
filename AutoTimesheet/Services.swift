@@ -34,11 +34,8 @@ struct TimesheetService: ServiceType {
     
     func getProjectStatusAt(date: Date = Date()) -> Promise<ProjectResponse> {
         
-        let formatter = DateFormatter()
-        
-        formatter.dateFormat = "dd-MM-yyyy"
         let param: [String: Any] = [
-            "date": formatter.string(from: date)
+            "date": Current.dateFormater.string(from: date)
         ]
         return Alamofire.request("https://timesheet.savvycom.vn/users/getTimesheetLoging",
                                  method: .post,
@@ -50,12 +47,10 @@ struct TimesheetService: ServiceType {
     
     
     func logTimesheet(for projects: Set<Project>, at date: Date) -> Promise<LogTimesheetResponse> {
-        let formatter = DateFormatter()
         
-        formatter.dateFormat = "dd-MM-yyyy"
         
         let param: [String: Any] = [
-            "date": formatter.string(from: date),
+            "date": Current.dateFormater.string(from: date),
             "items": projects.map { proj in
                 return [
                     "des": proj.des,
@@ -66,7 +61,6 @@ struct TimesheetService: ServiceType {
                 
             }
         ]
-        
         return Alamofire.request("https://timesheet.savvycom.vn/users/timeSheets",
                                  method: .post,
                                  parameters: param,

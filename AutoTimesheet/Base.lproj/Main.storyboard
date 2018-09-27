@@ -730,11 +730,11 @@
                                         </collectionView>
                                     </subviews>
                                 </clipView>
-                                <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="mQE-VF-6GW">
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="mQE-VF-6GW">
                                     <rect key="frame" x="-100" y="-100" width="233" height="15"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
-                                <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="P3Z-KE-mTe">
+                                <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="P3Z-KE-mTe">
                                     <rect key="frame" x="234" y="1" width="15" height="143"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
@@ -746,11 +746,21 @@
                                     <font key="font" metaFont="system"/>
                                 </buttonCell>
                             </button>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EoC-sJ-DdE">
+                                <rect key="frame" x="411" y="12" width="290" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Closing window will automatically save settings" id="Otw-d0-NVJ">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
+                            <constraint firstAttribute="bottom" secondItem="EoC-sJ-DdE" secondAttribute="bottom" constant="12" id="7n4-NF-ymC"/>
                             <constraint firstAttribute="trailing" secondItem="D4r-hv-tga" secondAttribute="trailing" constant="32" id="BYw-3S-5eG"/>
                             <constraint firstAttribute="bottom" secondItem="D4r-hv-tga" secondAttribute="bottom" constant="12" id="EE1-mt-qHp"/>
                             <constraint firstItem="dXq-ty-RSO" firstAttribute="leading" secondItem="4j6-tD-OmR" secondAttribute="leading" id="RCq-Z2-g04"/>
+                            <constraint firstItem="EoC-sJ-DdE" firstAttribute="centerX" secondItem="4j6-tD-OmR" secondAttribute="centerX" id="TdD-GH-qAr"/>
                             <constraint firstAttribute="trailing" secondItem="dXq-ty-RSO" secondAttribute="trailing" id="aEB-2I-uh3"/>
                             <constraint firstAttribute="bottom" secondItem="dXq-ty-RSO" secondAttribute="bottom" constant="48" id="fZM-o2-4eo"/>
                             <constraint firstItem="dXq-ty-RSO" firstAttribute="top" secondItem="4j6-tD-OmR" secondAttribute="top" id="x5y-Sy-uQD"/>

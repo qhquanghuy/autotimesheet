@@ -50,6 +50,8 @@ class ProjectCollectionItemView: NSView {
     
     
     
+    
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         self.addSubview(self.lblProjectName, constraints: [
@@ -109,7 +111,7 @@ class ProjectCollectionItemView: NSView {
         self.lblProjectName.stringValue = project.name
         self.lblDes.stringValue = project.des
         self.lblHours.stringValue = String(project.wkTime)
-        self.lblLocalGit.stringValue = project.localGitRepo?.absoluteString ?? ""
+        self.lblLocalGit.stringValue = project.localGitRepo ?? ""
     }
 
     
@@ -131,6 +133,13 @@ func labelStyle(for textF: NSTextField) {
     textF.isEditable = false
     textF.isBordered = false
 }
+
+func isGitDirectory(urlStr: String) -> Bool {
+    let isValid = try? Current.fileManager.contentsOfDirectory(atPath: urlStr)
+    return isValid.map { $0.contains(".git") } ?? false
+    
+}
+
 extension ProjectCollectionItemView : NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         guard let textF = obj.object as? NSTextField else { return }
@@ -140,7 +149,14 @@ extension ProjectCollectionItemView : NSTextFieldDelegate {
         } else if textF == self.lblHours {
             self.project?.0.wkTime = Double(textF.stringValue)!
         } else if textF == self.lblLocalGit {
-            self.project?.0.localGitRepo = textF.stringValue |> URL.init
+            if isGitDirectory(urlStr: textF.stringValue) {
+                self.project?.0.localGitRepo = textF.stringValue
+                _ = getLastestGitLog(validUrl: textF.stringValue).done(on: DispatchQueue.main) { [weak self] log in
+                    self?.lblDes.stringValue = log.subject
+                }
+            } else {
+                self.lblLocalGit.stringValue = "Invalid URL"
+            }
         } else {
             
         }

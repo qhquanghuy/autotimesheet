@@ -20,6 +20,8 @@
 		006799302156B848005E1E8C /* AutoTimesheetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */; };
 		006E525421593F880089587F /* MockKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E525321593F880089587F /* MockKeyValueStorage.swift */; };
 		006E52552159469E0089587F /* MockKeyValueStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006E525321593F880089587F /* MockKeyValueStorage.swift */; };
+		00724853215C84FB003B7A80 /* GitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00724852215C84FB003B7A80 /* GitLog.swift */; };
+		00724854215C8506003B7A80 /* GitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00724852215C84FB003B7A80 /* GitLog.swift */; };
 		008EC0152157826100A10E7C /* ProjectVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 008EC0142157826100A10E7C /* ProjectVC.swift */; };
 		00903C132156B96E008F8BCE /* Enviroment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067992D2156B4E6005E1E8C /* Enviroment.swift */; };
 		00903C142156B975008F8BCE /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0067990D21564BB1005E1E8C /* Services.swift */; };
@@ -71,6 +73,7 @@
 		0067992D2156B4E6005E1E8C /* Enviroment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Enviroment.swift; sourceTree = "<group>"; };
 		0067992F2156B847005E1E8C /* AutoTimesheetTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoTimesheetTests.swift; sourceTree = "<group>"; };
 		006E525321593F880089587F /* MockKeyValueStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockKeyValueStorage.swift; sourceTree = "<group>"; };
+		00724852215C84FB003B7A80 /* GitLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GitLog.swift; sourceTree = "<group>"; };
 		008EC0142157826100A10E7C /* ProjectVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectVC.swift; sourceTree = "<group>"; };
 		0093A60D215B672E00EC1CF3 /* Credentials&Configurations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Credentials&Configurations.swift"; sourceTree = "<group>"; };
 		0093A610215B6CF000EC1CF3 /* ProjectCollectionViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCollectionViewItem.swift; sourceTree = "<group>"; };
@@ -126,6 +129,16 @@
 			path = AutoTimesheetTests;
 			sourceTree = "<group>";
 		};
+		006A3DC9215BCE4A00D29B4B /* Preference */ = {
+			isa = PBXGroup;
+			children = (
+				008EC0142157826100A10E7C /* ProjectVC.swift */,
+				0093A610215B6CF000EC1CF3 /* ProjectCollectionViewItem.swift */,
+				0093A619215B768500EC1CF3 /* ProjectCollectionItemView.swift */,
+			);
+			path = Preference;
+			sourceTree = "<group>";
+		};
 		00C21C9D2155210900449FCC /* Prelude */ = {
 			isa = PBXGroup;
 			children = (
@@ -172,10 +185,9 @@
 				0067990D21564BB1005E1E8C /* Services.swift */,
 				0067991121564E86005E1E8C /* MockServices.swift */,
 				009E4D7421580587009E56B9 /* LogTimesheetResponse.swift */,
+				00724852215C84FB003B7A80 /* GitLog.swift */,
 				0067991321565247005E1E8C /* Project.swift */,
-				008EC0142157826100A10E7C /* ProjectVC.swift */,
-				0093A610215B6CF000EC1CF3 /* ProjectCollectionViewItem.swift */,
-				0093A619215B768500EC1CF3 /* ProjectCollectionItemView.swift */,
+				006A3DC9215BCE4A00D29B4B /* Preference */,
 				00C5B5352154D413000D1B3F /* Assets.xcassets */,
 				00C5B5372154D413000D1B3F /* Main.storyboard */,
 				00C5B53A2154D413000D1B3F /* Info.plist */,
@@ -265,7 +277,7 @@
 						CreatedOnToolsVersion = 10.0;
 						SystemCapabilities = {
 							com.apple.Sandbox = {
-								enabled = 1;
+								enabled = 0;
 							};
 						};
 					};
@@ -419,6 +431,7 @@
 				0093A612215B6D1A00EC1CF3 /* ProjectCollectionViewItem.swift in Sources */,
 				0093A60F215B674500EC1CF3 /* Credentials&Configurations.swift in Sources */,
 				006E52552159469E0089587F /* MockKeyValueStorage.swift in Sources */,
+				00724854215C8506003B7A80 /* GitLog.swift in Sources */,
 				006799242156614E005E1E8C /* Functions.swift in Sources */,
 				00D49EAF2158D92500CA2132 /* Notification.swift in Sources */,
 				009E4D76215806D4009E56B9 /* LogTimesheetResponse.swift in Sources */,
@@ -449,6 +462,7 @@
 				0093A611215B6CF000EC1CF3 /* ProjectCollectionViewItem.swift in Sources */,
 				0067992921569FEC005E1E8C /* Either.swift in Sources */,
 				009E4D7521580587009E56B9 /* LogTimesheetResponse.swift in Sources */,
+				00724853215C84FB003B7A80 /* GitLog.swift in Sources */,
 				008EC0152157826100A10E7C /* ProjectVC.swift in Sources */,
 				0067991421565247005E1E8C /* Project.swift in Sources */,
 			);
@@ -640,7 +654,6 @@
 			baseConfigurationReference = BCD70B5D2632AB8F17205E84 /* Pods-AutoTimesheet.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = AutoTimesheet/AutoTimesheet.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -663,7 +676,6 @@
 			baseConfigurationReference = 38ACA384668EF2AAA3343375 /* Pods-AutoTimesheet.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = AutoTimesheet/AutoTimesheet.entitlements;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
